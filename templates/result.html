@@ -7,7 +7,7 @@
 
 
 {% block body %}
-<div class="result-page">
+<div class="result-page" id="result-page">
   <div>
     <form method="POST" action="{{ url_for('result') }} ">
       <input class="scan-form" name="url" type="text" placeholder="Scan a URL" required />
@@ -29,12 +29,14 @@
       </p>
       <br>
       <button type="button" class="btn btn-danger btn-size" style="margin-left: 1rem;">Report</button>
-      <button type="button" class="btn btn-info btn-size">Download</button>
-      <button type="button" class="btn btn-warning btn-size">Rescan</button>
+      <button id="download" class="btn btn-info btn-size">Download</button>
+      <form action="{{ url_for('result') }}" method="POST">
+        <button name="url" class="btn btn-warning btn-size" value="{{ data0 }}">Rescan</button>
+      </form>
     </div>
 
     <!-- right Column -->
-    <div class="column right">
+    <div class="column right" id="haatu">
       <h4>Submitted URL</h4>
       <p class="url-link"> {{ data0 }} </p>
       <hr>
@@ -47,84 +49,31 @@
       <p>Sucuri :</p>
     </div>
 
-
         <div class="column left-sum">
-          <h4>Result Summary</h4>
-
+          <br><br><h4>Result Summary</h4>
+          {% if data3 == 'benign'%}
            <p>URL Status: Secure</p>
+           {% else %}
+           <p>URL Status: Malicious</p>
+          {% endif %}
+           <p>Main Domain: {{ data4 }}</p>
+           <p>Status Code: {{ data5 }}</p>
+           <p>Content Size: {{ data6 }} bytes</p>
+
         </div>
   
   
         <div class="column right-sum">
-          <p>IP Address: Secure</p>
+          <br><br><br><br><p>IP Address: {{ data7 }}</p>
+          <p>Redirects: {{ data8 }}</p>
+          <p>Date Created: {{ data9 }}</p>
+          <p>Country: {{ data10 }}</p>
         </div>
     
 
 
 
-    <div class="result">
-      <h4>Result Summary</h4>
-
-
-
-
-
-
-      <div>
-        <div class="border-result" style="margin-left: 4rem;">
-          <b class="txt-box">URL Status</b>
-          {% if data3 == 'benign' %}
-          <div>
-            <img src="/static/css/images/secure.png">
-            <p style="color: #22B573;">Safe URL</p>
-          </div>
-
-
-          {% else %}
-          <div>
-            <img src="/static/css/images/warning.png">
-            <p style="color: red;">Malicious URL</p>
-          </div>
-          {% endif %}
-        </div>
-
-        <div class="border-result">
-          <b class="txt-box">Main Domain</b>
-          <p style="margin-top: 15%;">{{ data4 }}</p>
-        </div>
-
-        <div class="border-result">
-          <b class="txt-box">Status Code</b>
-          <p style="margin-top: 15%;">{{ data5 }}</p>
-        </div>
-
-        <div class="border-result">
-          <b class="txt-box">Content Size</b>
-          <p style="margin-top: 15%;">{{ data6 }} bytes</p>
-        </div>
-
-        <div class="border-result" style="margin-left: 4rem;">
-          <b class="txt-box">IP Address</b>
-          <p style="margin-top: 15%;">{{ data7 }}</p>
-        </div>
-
-        <div class="border-result">
-          <b class="txt-box">Redirects</b>
-          <p style="margin-top: 15%;">{{ data8 }}</p>
-        </div>
-
-        <div class="border-result">
-          <b class="txt-box">Date Created</b>
-          <p style="margin-top: 15%;">{{ data9 }}</p>
-        </div>
-
-        <div class="border-result">
-          <b class="txt-box">Country</b>
-          <p style="margin-top: 15%;">{{ data10 }}</p>
-        </div>
-      </div>
-    </div>
-
+   
   </div>
 </div>
 
@@ -153,4 +102,17 @@
     modal.style.display = "none";
   }
 </script>
+
+<script>
+  window.onload = function () {
+  document.getElementById("download")
+      .addEventListener("click", () => {
+          const invoice = this.document.getElementById("result-page");
+          console.log(invoice);
+          console.log(window);
+          html2pdf().from(invoice).save();
+      })
+}
+</script>
+
 {% endblock %}
