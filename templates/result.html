@@ -7,7 +7,7 @@
 
 
 {% block body %}
-<div class="result-page" id="result-page">
+<div class="result-page">
   <div>
     <form method="POST" action="{{ url_for('result') }} ">
       <input class="scan-form" name="url" type="text" placeholder="Scan a URL" required />
@@ -15,7 +15,7 @@
     </form>
   </div>
 
-  <div class="row row-result">
+  <div class="row row-result" id="result-page">
 
     <!-- left Column -->
     <div class="column left">
@@ -28,15 +28,15 @@
         <img class="modal-content" id="img01">
       </p>
       <br>
-      <button type="button" class="btn btn-danger btn-size" style="margin-left: 1rem;">Report</button>
+      <button id="report" type="button" class="btn btn-danger btn-size">Report</button>
       <button id="download" class="btn btn-info btn-size">Download</button>
-      <form action="{{ url_for('result') }}" method="POST">
-        <button name="url" class="btn btn-warning btn-size" value="{{ data0 }}">Rescan</button>
+      <form action="{{ url_for('result') }}" method="POST" class="btn-size">
+        <button name="url" class="btn btn-warning" value="{{ data0 }}">Rescan</button>
       </form>
     </div>
 
     <!-- right Column -->
-    <div class="column right" id="haatu">
+    <div class="column right">
       <h4>Submitted URL</h4>
       <p class="url-link"> {{ data0 }} </p>
       <hr>
@@ -44,36 +44,46 @@
       <p class="url-link"> {{ data1 }} </p>
       <hr>
       <h4>Existing Web Result</h4>
-      <p>VirusTotal : </p>
-      <p>URLScan.io : </p>
-      <p>Sucuri :</p>
+      <p>VirusTotal</p>
+      <p>URLScan.io</p>
+      <p>Sucuri</p>
     </div>
 
-        <div class="column left-sum">
-          <br><br><h4>Result Summary</h4>
-          {% if data3 == 'benign'%}
-           <p>URL Status: Secure</p>
-           {% else %}
-           <p>URL Status: Malicious</p>
-          {% endif %}
-           <p>Main Domain: {{ data4 }}</p>
-           <p>Status Code: {{ data5 }}</p>
-           <p>Content Size: {{ data6 }} bytes</p>
+    <div class="column left-sum">
+      <h4 style="margin-bottom: 1rem;">Result Summary</h4>
 
-        </div>
-  
-  
-        <div class="column right-sum">
-          <br><br><br><br><p>IP Address: {{ data7 }}</p>
-          <p>Redirects: {{ data8 }}</p>
-          <p>Date Created: {{ data9 }}</p>
-          <p>Country: {{ data10 }}</p>
-        </div>
-    
+      <div class="grid-container">
+        <div>URL Status</div>
+        {% if data3 == 'benign'%}
+        <div style="color: green;"><b>Secure</b></div>
+        {% else %}
+        <div style="color: red;"><b>Malicious</b></div>
+        {% endif %}
+
+        <div>Main Domain</div>
+        <div>{{ data4 }}</div>
+        <div>Status Code</div>
+        <div>{{ data5 }}</div>
+        <div>Content Size</div>
+        <div>{{ data6 }}</div>
+      </div>
+    </div>
+
+    <div class="column right-sum">
+      <div class="grid-container">
+        <div>IP Address</div>
+        <div>{{ data7 }}</div>
+        <div>Redirects</div>
+        <div>{{ data8 }}</div>
+        <div>Date Created</div>
+        <div>{{ data9 }}</div>
+        <div>Country</div>
+        <div>{{ data10 }}</div>
+      </div>
 
 
 
-   
+
   </div>
 </div>
 
@@ -105,14 +115,14 @@
 
 <script>
   window.onload = function () {
-  document.getElementById("download")
+    document.getElementById("download")
       .addEventListener("click", () => {
-          const invoice = this.document.getElementById("result-page");
-          console.log(invoice);
-          console.log(window);
-          html2pdf().from(invoice).save();
+        const invoice = this.document.getElementById("result-page");
+        console.log(invoice);
+        console.log(window);
+        html2pdf().from(invoice).save();
       })
-}
+  }
 </script>
 
 {% endblock %}

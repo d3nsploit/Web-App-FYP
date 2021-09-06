@@ -838,6 +838,11 @@ p.account a:hover {
   color: #000000;
 }
 
+.btn-size{
+  display: inline-block;
+  text-align: center;
+  font-size: 20px;
+}
 
 .scan-form {
   width: 50%;
@@ -846,6 +851,7 @@ p.account a:hover {
   box-sizing: border-box;
   border: 1px solid #0568c1;
   border-color: #0568c1;
+  font-size: 16px;
 
 }
 
@@ -872,7 +878,15 @@ p.account a:hover {
   padding: 2%;
 }
 
-.row-result .right hr {
+.row-result h4{
+  font-size: 20px;
+}
+
+.row-result p{
+  font-size: 16px;
+}
+
+.row-result hr {
   margin-left: 0;
   width: 80%;
 }
@@ -897,9 +911,22 @@ padding-left: 5rem;}
 
 .left-sum{
   width: 50%;
+  margin-top: 3rem;
 }
 
 .right-sum{
   width: 50%;
+  margin-top: 5rem;
+}
 
+.grid-container {
+  display: grid;
+  grid-template-columns: 30% 70%;
+  grid-gap: 10px;
+  padding: 10px;
+}
+
+.grid-container > div {
+  padding: 7px 0;
+  font-size: 16px;
 }
