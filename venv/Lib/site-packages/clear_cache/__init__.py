@@ -1,0 +1,19 @@
+from os import listdir as scan_dir
+from os.path import isdir as is_folder
+from shutil import rmtree as remove_dir
+
+
+def clear(dir='.'):
+    dir=str(dir).replace('/', '\\')
+    if not dir[-1]=='\\':
+        dir+='\\'
+    for i in scan_dir(dir):
+        if is_folder(dir+i):
+            if i=='__pycache__':
+                remove_dir(dir+i)
+            else:
+                clear(dir+i)
+
+
+if __name__=='__main__':
+    clear('.')

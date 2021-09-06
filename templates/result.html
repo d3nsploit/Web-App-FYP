@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>ScanMe</title>
+{% endblock %}
+
+
+
+{% block body %}
+<div class="result-page">
+  <div>
+    <form method="POST" action="{{ url_for('result') }} ">
+      <input class="scan-form" name="url" type="text" placeholder="Scan a URL" required />
+      <input class="btn-result" type="submit" value="ScanMe">
+    </form>
+  </div>
+
+  <div class="row row-result">
+
+    <!-- left Column -->
+    <div class="column left">
+      <h4>Screenshot</h4>
+      <h2><img id="webImage" src="{{ data2 }}"></h2>
+      <p id="myModal" class="modal">
+        <!-- The Close Button -->
+        <span class="close">&times;</span>
+        <!-- Modal Content (The Image) -->
+        <img class="modal-content" id="img01">
+      </p>
+      <br>
+      <button type="button" class="btn btn-danger btn-size" style="margin-left: 1rem;">Report</button>
+      <button type="button" class="btn btn-info btn-size">Download</button>
+      <button type="button" class="btn btn-warning btn-size">Rescan</button>
+    </div>
+
+    <!-- right Column -->
+    <div class="column right">
+      <h4>Submitted URL</h4>
+      <p class="url-link"> {{ data0 }} </p>
+      <hr>
+      <h4>Submitted On</h4>
+      <p class="url-link"> {{ data1 }} </p>
+      <hr>
+      <h4>Existing Web Result</h4>
+      <p>VirusTotal : </p>
+      <p>URLScan.io : </p>
+      <p>Sucuri :</p>
+    </div>
+
+
+        <div class="column left-sum">
+          <h4>Result Summary</h4>
+
+           <p>URL Status: Secure</p>
+        </div>
+  
+  
+        <div class="column right-sum">
+          <p>IP Address: Secure</p>
+        </div>
+    
+
+
+
+    <div class="result">
+      <h4>Result Summary</h4>
+
+
+
+
+
+
+      <div>
+        <div class="border-result" style="margin-left: 4rem;">
+          <b class="txt-box">URL Status</b>
+          {% if data3 == 'benign' %}
+          <div>
+            <img src="/static/css/images/secure.png">
+            <p style="color: #22B573;">Safe URL</p>
+          </div>
+
+
+          {% else %}
+          <div>
+            <img src="/static/css/images/warning.png">
+            <p style="color: red;">Malicious URL</p>
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="border-result">
+          <b class="txt-box">Main Domain</b>
+          <p style="margin-top: 15%;">{{ data4 }}</p>
+        </div>
+
+        <div class="border-result">
+          <b class="txt-box">Status Code</b>
+          <p style="margin-top: 15%;">{{ data5 }}</p>
+        </div>
+
+        <div class="border-result">
+          <b class="txt-box">Content Size</b>
+          <p style="margin-top: 15%;">{{ data6 }} bytes</p>
+        </div>
+
+        <div class="border-result" style="margin-left: 4rem;">
+          <b class="txt-box">IP Address</b>
+          <p style="margin-top: 15%;">{{ data7 }}</p>
+        </div>
+
+        <div class="border-result">
+          <b class="txt-box">Redirects</b>
+          <p style="margin-top: 15%;">{{ data8 }}</p>
+        </div>
+
+        <div class="border-result">
+          <b class="txt-box">Date Created</b>
+          <p style="margin-top: 15%;">{{ data9 }}</p>
+        </div>
+
+        <div class="border-result">
+          <b class="txt-box">Country</b>
+          <p style="margin-top: 15%;">{{ data10 }}</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+<script>
+  // Get the modal
+  var modal = document.getElementById("myModal");
+
+  // Get the image and insert it inside the modal - use its "alt" text as a caption
+  var img = document.getElementById("webImage");
+  var modalImg = document.getElementById("img01");
+  var captionText = document.getElementById("caption");
+  img.onclick = function () {
+    modal.style.display = "block";
+    modalImg.src = this.src;
+    captionText.innerHTML = this.alt;
+  }
+
+  // Get the <span> element that closes the modal
+  var span = document.getElementsByClassName("close")[0];
+
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function () {
+    modal.style.display = "none";
+  }
+</script>
+{% endblock %}

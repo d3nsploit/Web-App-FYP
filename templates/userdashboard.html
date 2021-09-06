@@ -1,0 +1,132 @@
+
+{% extends 'base2.html' %}
+
+{% block head %}
+<title>Dashboard</title>
+{% endblock %}
+
+{% block body %}
+<main>
+    <div class="main__container">
+        <!-- MAIN TITLE STARTS HERE -->
+
+        <div class="main__title">
+            <img src="assets/hello.svg" alt="" />
+          <div class="main__greeting">
+              <h1>Hello Codersbite</h1>
+          </div>
+      </div>
+
+        <!-- MAIN TITLE ENDS HERE -->
+
+        <!-- MAIN CARDS STARTS HERE -->
+        <div class="main__cards" style="grid-template-columns: 1fr 1fr 1fr;">
+          <div class="card">
+            <i
+              class="fa fa-search fa-2x text-lightblue"
+              aria-hidden="true"
+            ></i>
+            <div class="card_inner">
+              <p class="text-primary-p">Scanned URL</p>
+              <span class="font-bold text-title">{{ data0 }}</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <i
+              class="fa fa-search-plus fa-2x text-green"
+              aria-hidden="true"
+            ></i>
+            <div class="card_inner">
+              <p class="text-primary-p">Benign URL</p>
+              <span class="font-bold text-title">{{ data1 }}</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <i
+              class="fa fa-search-minus fa-2x text-red"
+              aria-hidden="true"
+            ></i>
+            <div class="card_inner">
+              <p class="text-primary-p">Malicious URL</p>
+              <span class="font-bold text-title">{{ data2 }}</span>
+            </div>
+          </div>
+        </div>
+        <!-- MAIN CARDS ENDS HERE -->
+
+        <!-- CHARTS STARTS HERE -->
+        <!-- Daily report -->
+        <div class="charts" style="grid-template-columns: 1fr 1fr;">
+          <div class="charts__left">
+            <div class="charts__left__title">
+              <div>
+                <h1>Daily Reports</h1>
+              </div>
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+            </div>
+            <div id="apex1"></div>
+          </div>
+
+          <div class="charts__right">
+            <div class="charts__right__title">
+              <div>
+                <h1>Recent Scanned URL</h1>
+              </div>
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+            </div>
+
+            <!-- Stats Report -->
+            <div class="charts__right__cards">
+              <table>
+                <tr>
+                  <th>Url</th>
+                  <th>Age</th>
+                  <th>Status</th>
+                </tr>
+                <tr>
+                  <td>Alfrexaxads Futterdad dadad acace daedca dawdwd dwdwad kiste</td>
+                  <td>30 s</td>
+                  <td>Germany</td>
+                </tr>
+                <tr>
+                  <td>Centro comercial Moctezuma</td>
+                  <td>1 min</td>
+                  <td>Mexico</td>
+                </tr>
+                <tr>
+                  <td>Ernst Handel</td>
+                  <td>6 h</td>
+                  <td>Austria</td>
+                </tr>
+                <tr>
+                  <td>Island Trading</td>
+                  <td>2 d</td>
+                  <td>UK</td>
+                </tr>
+                <tr>
+                  <td>Laughing Bacchus Winecellars</td>
+                  <td>10 d</td>
+                  <td>Canada</td>
+                </tr>
+                <tr>
+                  <td>Magazzini Alimentari Riuniti</td>
+                  <td>10 d</td>
+                  <td>Italy</td>
+                </tr>
+                <tr>
+                  <td>Alfrexaxads Futterdad dadad acace daedca dawdwd dwdwad kiste</td>
+                  <td>30 s</td>
+                  <td>Germany</td>
+                </tr>
+              </table>
+              
+            </div>
+          </div>
+        </div>
+        <!-- CHARTS ENDS HERE -->
+      </div>
+    </main>
+{% endblock %}
+

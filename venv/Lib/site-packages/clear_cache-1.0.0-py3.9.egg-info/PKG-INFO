@@ -1,0 +1,25 @@
+Metadata-Version: 2.1
+Name: clear-cache
+Version: 1.0.0
+Summary: Remove __pycache__ folder
+Home-page: UNKNOWN
+Author: Pixelsuft
+License: MIT
+Description: # Clear Cache
+        Remove __pycache__ folder
+        # Installation
+        ```
+        python -m pip install clear_cache
+        ```
+        # Example
+        ```
+        from clear_cache import clear as clear_cache
+        clear_cache(dir = ".")
+        ```
+        
+Keywords: clear_cache
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Requires-Python: >=3.5
+Description-Content-Type: text/markdown

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+    integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+  <!-- Navbar Baru -->
+  <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
+
+
+
+  <!-- Font Awesome -->
+
+
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" />
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+  </script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+  </script>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/result.css') }}">
+
+  {% block head %} {% endblock %}
+
+</head>
+
+<body>
+
+
+
+  <nav class="nav bgcolor" id="navbar">
+      <div class="logo">
+        <a href="/#section1" id="logo">
+          <h1 style="font-size: 20px;"><i class="fas fa-code"></i> ScanMe</h1>
+        </a>
+      </div>
+
+      <div>
+        <ul class="nav__list" id="navlinkitems">
+          <li class="nav__item">
+            <a href="/#section1" class="nav__link" id="home">Home</a>
+          </li>
+          <li class="nav__item">
+            <a href="/#section2" class="nav__link" id="services">Services</a>
+          </li>
+          <li class="nav__item">
+            <a href="/#section3" class="nav__link" id="about">About Us</a>
+          </li>
+          <li class="nav__item">
+            <a href="/#section4" class="nav__link" id="contact">Contact</a>
+          </li>
+          {% if session['fname'] %}
+          <li class="nav__item">
+            <a href="/dashboard" class="nav__link" id="contact">Hi, {{ session['fname'] }}</a>
+          </li>
+          {% else %}
+          <li class="nav__item">
+            <a href="/sign_in" class="nav__link" id="signin">Sign In</a>
+          </li>
+          <li class="nav__item">
+            <a href="/sign_up" class="button-signup" style="margin-top: -15px;" id="signup">Sign Up</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+  </nav>
+
+
+
+
+
+  <!--Penting-->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous">
+  </script>
+  <!--Penting-->
+  <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+
+
+  <!-- Script to remove # in url -->
+  <script>
+    $(document).ready(function () {
+      const menuBtn = $('.nav__item');
+      menuBtn.click(() => {
+        setTimeout(() => {
+          removeHash();
+        }, 3);
+
+      });
+
+      function removeHash() {
+        history.replaceState('', document.title, window.location.origin + window.location.pathname + window.location
+          .search);
+      }
+    });
+  </script>
+
+
+  <script>
+    $(window).scroll(function () {
+      $('nav').toggleClass('scrolled', $(this).scrollTop() > 50)
+
+    });
+  </script>
+
+  {% block body %} {% endblock %}
+
+</body>
+
+</html>

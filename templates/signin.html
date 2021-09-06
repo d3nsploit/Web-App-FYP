@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Login - ScanMe</title>
+
+{% endblock %}
+
+{% block body %}
+
+<div class="login-form">
+    <h2 style="color: #2c4893;">Sign In</h2>
+
+
+
+
+    <div class="container-form">
+        <div class="main-login">
+            <div class="content">
+                
+                {% for message in get_flashed_messages() %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ message }}
+                  </div>
+                {% endfor %}
+
+                <form method="POST">
+                    <input class="form-homepage" type="text" name="emailusername" placeholder="Email or username" required autofocus="">
+                    <input class="form-homepage" type="password" name="password" placeholder="Password" required autofocus="">
+                    <button class="btn" type="submit">Sign In</button>
+                </form>
+                <p class="account">Don't have an account? <a href="/sign_up"> Sign Up</a></p>
+            </div>
+            <div class="form-img">
+                <img src="/static/css/images/signin.jpg">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 
+<div class="split-screen login-login body-login">
+    <div class="left">
+        <section class="copy">
+            <h1 class="h1-login">Explore yor creativity</h1>
+        </section>
+    </div>
+    <div class="right">
+        <form method="POST" action="/dashboard"> 
+            <section class="copy">
+                <h2 class="h2-login">Sign In</h2>
+                <div class="login-container">
+                    <p>Don't have account yet?> <a href="/sign_up">
+                    <strong>Sign Up</strong></a></p>
+                </div>
+            </section>
+            <div class="input-container name">
+                <label for="uname">Username</label>
+                <input id="uname" name="email" type="text">
+            </div>
+            <div class="input-container password">
+                <label for="password">Password</label>
+                <input id="password" name="password" type="password">
+                <i class="far fa-eye-slash" onclick="showPassword()"></i>
+            </div>
+            <button class="signup-btn" type="submit">Sign In</button>
+        </form>
+    </div>
+</div> -->
+
+{% endblock %}

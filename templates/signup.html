@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>SignUp - ScanMe</title>
+{% endblock %}
+
+{% block body %}
+
+<div class="login-form">
+    <h2  style="color: #2c4893;">Sign Up</h2>
+
+    <div class="container-form">
+        <div class="main-login">
+            <div class="content">
+
+                {% if session['fname'] %}
+                {% for message in get_flashed_messages() %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ message }}
+                  </div>
+                {% endfor %}
+                {% else %}
+                {% for message in get_flashed_messages() %}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    {{ message }}
+                  </div>
+                {% endfor %}
+                {% endif %}
+
+                <form method="POST">
+                    <input class="form-homepage" type="text" name="fname" placeholder="First name" required autofocus="">
+                    <input class="form-homepage" type="text" name="lname" placeholder="Last name" required autofocus="">
+                    <input class="form-homepage" type="email" name="email" placeholder="Email" required autofocus="">
+                    <input class="form-homepage" type="text" name="username" placeholder="Username" required autofocus="">
+                    <input class="form-homepage" type="password" name="password" placeholder="Password" required autofocus="">
+                    <input class="form-homepage" type="password" name="repassword" placeholder="Password" required autofocus="">
+                    <button class="btn" type="submit">Sign Up</button>
+                </form>
+                <p class="account">Already registered? <a href="/sign_in"> Sign In</a></p>
+            </div>
+            <div class="form-img">
+                <img src="/static/css/images/signup.png">
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

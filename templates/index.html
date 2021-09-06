@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>ScanMe</title>
+{% endblock %}
+
+{% block body %}
+
+<section class="section1" id="section1">
+
+    <div class="content-home">
+        <h3>Browse
+            <div class="slidingVertical">
+                <span>Safely</span>
+                <span>Securely</span>
+                <span>Confidently</span>
+            </div>
+        </h3>
+        <p>
+            Check suspicious URL with ScanMe URL Scanner. Real-time results
+            detect malicious URL with high accuracy using machine learning analysis.
+        </p>
+        <div>
+            <form method="POST" action="{{ url_for('result') }}">
+                <input name="url" type="text" class="form-homepage" placeholder="Scan a URL" required autofocus=""
+                    style="float: left;">
+                <input class="btn-homepage" type="submit" value="Scan Now" style="float:right;">
+            </form>
+        </div>
+    </div>
+
+    <div class="image">
+        <img src="static/css/images/cyber.png" alt="">
+    </div>
+</section>
+
+
+<section id="section2">
+    <div class="mt-30">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12" style="text-align: center; ">
+                    <h2>Services</h2>
+                    <hr class="lines pb-4 finbyz-zoomin" style="transform: matrix(1, 0, 0, 1, 0, 0);">
+                </div>
+            </div>
+            <div class="row content-box-wrapper">
+
+                <div class="col-md-4 mt-20">
+                    <div class="content-box text-center finbyz-fadeinup box-shadow"
+                        style="opacity: 1; transform: matrix(1, 0, 0, 1, 0, 0);">
+                        <div class="finbyz-icon finbyz-zoomin" style="transform: matrix(1, 0, 0, 1, 0, 0);">
+                            <img alt="Identify financial risk"
+                                src="https://www.finbyz.com/static/media/svg/identify-financial-risk.svg"
+                                title="Identify financial risk"></div>
+                        <h4>Identify Malicious Url</h4>
+                        <p>Have a bird eye view of the current systems and processes</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mt-20">
+                    <div class="content-box text-center finbyz-fadeinup box-shadow"
+                        style="opacity: 1; transform: matrix(1, 0, 0, 1, 0, 0);">
+                        <div class="finbyz-icon finbyz-zoomin" style="transform: matrix(1, 0, 0, 1, 0, 0);">
+                            <img alt="Treasury Policy" src="https://www.finbyz.com/static/media/svg/treasury-policy.svg"
+                                title="Treasury Policy"></div>
+                        <h4>Treasury Policy</h4>
+                        <p>Focus on strategic planning rather than daily tactics.</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mt-20">
+                    <div class="content-box text-center finbyz-fadeinup box-shadow"
+                        style="opacity: 1; transform: matrix(1, 0, 0, 1, 0, 0);">
+                        <div class="finbyz-icon finbyz-zoomin" style="transform: matrix(1, 0, 0, 1, 0, 0);">
+                            <img alt="Fx Market Information"
+                                src="https://www.finbyz.com/static/media/svg/fx-market-information .svg"
+                                title="Fx Market Information"></div>
+                        <h4>Fx Market Information</h4>
+                        <p>Filter out the noise to get the information that matters.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section id="section3">
+    <div class="section3-text">
+        <h2>About Us</h2>
+        <hr class="lines pb-4" style="transform: matrix(1, 0, 0, 1, 0, 0);">
+        <h3>ndjnadnjndjnansndjndnjndsnandsjnadjnsajdnsn</h3>
+        <div class="container-sec3">
+            <div>
+                <span class="count">71441670</span>
+                njnandjna
+            </div>
+            <div>
+                <span class="count">71441670</span>
+                njnandjna
+            </div>
+            <div>
+                <span class="count">71441670</span>
+                njnandjna
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+
+<section id="section4" class="section4">
+    <h1 class="heading"> <span>contact</span> us </h1>
+
+    <div class="icons-container">
+        <div class="icons">
+            <i class="fas fa-phone"></i>
+            <h4>our number</h4>
+            <p>+6011-23575653</p>
+        </div>
+        <div class="icons">
+            <i class="fas fa-envelope"></i>
+            <h4>our email</h4>
+            <p>dafiq856@gmail.com</p>
+        </div>
+        <div class="icons">
+            <i class="fas fa-map-marker-alt"></i>
+            <h4>our location</h4>
+            <p>University Malaya</p>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3983.90091302875!2d101.65165271475726!3d3.120904597727462!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31cdb47024217187%3A0x1e85ebc65d47d641!2sUniversity%20of%20Malaya!5e0!3m2!1sen!2smy!4v1630815288230!5m2!1sen!2smy"
+            class="map" allowfullscreen="" loading="lazy"></iframe>
+
+        <form action="">
+            <input type="text" placeholder="Full Name" class="box">
+            <input type="email" placeholder="Email" class="box">
+            <input type="text" placeholder="Subject" class="box">
+            <textarea name="" placeholder="Message" class="box" id="" cols="30" rows="10"></textarea>
+            <input type="submit" value="Submit" class="btn">
+        </form>
+
+    </div>
+
+</section>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0.0/jquery.counterup.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+
+
+<script type="text/javascript">
+    $(".count").counterUp({
+        delay: 10,
+        time: 1000
+    })
+</script>
+{% endblock %}
