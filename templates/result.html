@@ -7,6 +7,29 @@
 
 
 {% block body %}
+
+<div class="popup" id="popup-1">
+  <div class="overlay"></div>
+  <div class="content">
+    <div class="close-btn" onclick="togglePopup()">×</div>
+    <h1>Report this result</h1>
+    <div class="grid-container">
+      <div>URL</div>
+      <div>{{ data0 }}</div>
+      <div>Username</div>
+      <div>{{ session['fname'] }}</div>
+      <div>Details</div>
+      <div>
+        <form method="POST" action="{{ url_for('result') }}">
+          <textarea class="popup-input popup-box" placeholder="Details of report" required></textarea>
+          <input class="popup-btn" type="submit" value="Submit">
+        </form>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 <div class="result-page">
   <div>
     <form method="POST" action="{{ url_for('result') }} ">
@@ -28,7 +51,7 @@
         <img class="modal-content" id="img01">
       </p>
       <br>
-      <button id="report" type="button" class="btn btn-danger btn-size">Report</button>
+      <button onclick="togglePopup()" id="report" class="btn btn-danger btn-size">Report</button>
       <button id="download" class="btn btn-info btn-size">Download</button>
       <form action="{{ url_for('result') }}" method="POST" class="btn-size">
         <button name="url" class="btn btn-warning" value="{{ data0 }}">Rescan</button>
@@ -65,7 +88,7 @@
         <div>Status Code</div>
         <div>{{ data5 }}</div>
         <div>Content Size</div>
-        <div>{{ data6 }}</div>
+        <div>{{ data6 }} bytes</div>
       </div>
     </div>
 
@@ -84,45 +107,52 @@
 
 
 
+    </div>
   </div>
-</div>
 
 
 
 
-<script>
-  // Get the modal
-  var modal = document.getElementById("myModal");
+  <script>
+    // Get the modal
+    var modal = document.getElementById("myModal");
 
-  // Get the image and insert it inside the modal - use its "alt" text as a caption
-  var img = document.getElementById("webImage");
-  var modalImg = document.getElementById("img01");
-  var captionText = document.getElementById("caption");
-  img.onclick = function () {
-    modal.style.display = "block";
-    modalImg.src = this.src;
-    captionText.innerHTML = this.alt;
-  }
+    // Get the image and insert it inside the modal - use its "alt" text as a caption
+    var img = document.getElementById("webImage");
+    var modalImg = document.getElementById("img01");
+    var captionText = document.getElementById("caption");
+    img.onclick = function () {
+      modal.style.display = "block";
+      modalImg.src = this.src;
+      captionText.innerHTML = this.alt;
+    }
 
-  // Get the <span> element that closes the modal
-  var span = document.getElementsByClassName("close")[0];
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
 
-  // When the user clicks on <span> (x), close the modal
-  span.onclick = function () {
-    modal.style.display = "none";
-  }
-</script>
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+      modal.style.display = "none";
+    }
+  </script>
 
-<script>
-  window.onload = function () {
-    document.getElementById("download")
-      .addEventListener("click", () => {
-        const invoice = this.document.getElementById("result-page");
-        console.log(invoice);
-        console.log(window);
-        html2pdf().from(invoice).save();
-      })
-  }
-</script>
+  <script>
+    window.onload = function () {
+      document.getElementById("download")
+        .addEventListener("click", () => {
+          const invoice = this.document.getElementById("result-page");
+          console.log(invoice);
+          console.log(window);
+          html2pdf().from(invoice).save();
+        })
+    }
+  </script>
 
-{% endblock %}
+
+  <script>
+    function togglePopup() {
+      document.getElementById("popup-1").classList.toggle("active");
+    }
+  </script>
+
+  {% endblock %}

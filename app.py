@@ -173,7 +173,6 @@ def dashboard():
                 "data2" : count_malicious,
                 # "data3" : recently_scan
             }
-            print(data['data3'])
             return render_template('dashboard.html', data=data)
         else:
             cur = mysql.connection.cursor()
