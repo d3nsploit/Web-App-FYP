@@ -76,11 +76,8 @@ def screenshot(user_url):
         'url': user_url,
 
         # all next parameters are optional, see our website screenshot API guide for more details
-        'dimension': '600x600',
-        'device': 'desktop',
-        'cacheLimit': '0',
-        'delay': '50',
-        'zoom': '100'
+        'dimension': '1024x768',
+        'format': 'jpg'
     }
 
     api_url = generate_screenshot_api_url(customer_key, secret_phrase, options)
@@ -89,7 +86,7 @@ def screenshot(user_url):
 
 # function to generate screenshot using api 'b14046'
 def generate_screenshot_api_url(customer_key, secret_phrase, options):
-    api_url = 'https://api.screenshotmachine.com/?key=' + customer_key
+    api_url = 'https://api.screenshotmachine.com/?key=' + 'b14046'
 
     if secret_phrase:
         api_url = api_url + '&hash=' + \

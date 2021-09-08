@@ -12,6 +12,7 @@
   <div class="overlay"></div>
   <div class="content">
     <div class="close-btn" onclick="togglePopup()">×</div>
+    {% if session%}
     <h1>Report this result</h1>
     <div class="grid-container">
       <div>URL</div>
@@ -26,7 +27,9 @@
         </form>
       </div>
     </div>
-
+    {% else %}
+    <h4 style="text-align: center;">Please Sign-in</h4>
+    {% endif %}
   </div>
 </div>
 
@@ -38,7 +41,7 @@
     </form>
   </div>
 
-  <div class="row row-result" id="result-page">
+  <div class="row row-result" id="result-sum-page">
 
     <!-- left Column -->
     <div class="column left">
@@ -52,7 +55,7 @@
       </p>
       <br>
       <button onclick="togglePopup()" id="report" class="btn btn-danger btn-size">Report</button>
-      <button id="download" class="btn btn-info btn-size">Download</button>
+      <button onclick="downloadPDF()" id="download" class="btn btn-info btn-size">Download</button>
       <form action="{{ url_for('result') }}" method="POST" class="btn-size">
         <button name="url" class="btn btn-warning" value="{{ data0 }}">Rescan</button>
       </form>
@@ -137,16 +140,51 @@
   </script>
 
   <script>
-    window.onload = function () {
-      document.getElementById("download")
-        .addEventListener("click", () => {
-          const invoice = this.document.getElementById("result-page");
-          console.log(invoice);
-          console.log(window);
-          html2pdf().from(invoice).save();
-        })
+    function downloadPDF() {
+      var element = document.getElementById("result-sum-page");
+      html2pdf(element, {
+        margin: 15,
+        filename: 'download.pdf',
+        image: {
+          type: 'jpg',
+          quality: 0.98
+        },
+        html2canvas: {
+          scale: 2,
+          logging: true,
+          dpi: 192,
+          letterRendering: true
+        },
+        jsPDF: {
+          unit: 'mm',
+          format: 'a4',
+          orientation: 'portrait'
+        }
+      });
     }
   </script>
+
+  <!-- <script>
+    var div = document.querySelector("#result-sum-page");
+
+    function downloadPDF() {
+      var imgData;
+
+      html2canvas($('#result-sum-page'), {
+        useCORS: true,
+        onrendered: function (canvas) {
+          imgData = canvas.toDataURL('image/png');
+
+          var doc = new jsPDF('p', 'pt', 'a3');
+
+          doc.addImage(imgData, 'png', 10, 10);
+
+          doc.save('download.pdf');
+
+        }
+      })
+    }
+  </script> -->
 
 
   <script>
