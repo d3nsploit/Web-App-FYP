@@ -9,6 +9,7 @@ import urllib
 import tldextract
 import ipinfo
 import pycountry
+import base64
 
 # function to resolve shorten url
 def url_resolve(user_url):
@@ -94,3 +95,6 @@ def generate_screenshot_api_url(customer_key, secret_phrase, options):
                 (options.get('url') + secret_phrase).encode('utf-8')).hexdigest()
     api_url = api_url + '&' + urllib.parse.urlencode(options)
     return api_url
+
+def get_as_base64(url):
+   return "data:image/jpeg;base64,"+base64.b64encode(requests.get(url).content).decode('utf-8')

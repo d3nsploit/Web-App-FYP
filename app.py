@@ -31,7 +31,6 @@ tempo = 0
 # })
 
 
-
 # Route to homepage
 @app.route('/')
 def index():
@@ -62,28 +61,14 @@ def result():
     now = datetime.now()
     get_time = now.strftime("%d/%m/%Y %H:%M:%S")
     get_screenshot = api_check.screenshot(get_url)
+    get_base64_image = api_check.get_as_base64(get_screenshot)
 
-    # Admin track total of scanned url
-    # global tempo
-    # global recently_scan
-    # print(tempo)
-    # if tempo <= 6:
-    #     recently_scan[tempo]['urls'] = get_url
-    #     recently_scan[tempo]['status'] = prediction[0]
-    #     tempo+=1
-
-    # else:
-    #     tempo = 0
-    #     recently_scan[tempo]['urls'] = get_url
-    #     recently_scan[tempo]['status'] = prediction[0]
-    #     tempo+=1
 
     if prediction[0] == 'benign':
         count_benign += 1
 
     else:
         count_malicious += 1
-
 
     # print(prediction[0]," ni predict")
     # Track for session user
@@ -99,7 +84,7 @@ def result():
         mysql.connection.commit()
         cur.close()
 
-    return render_template('result.html', data0=get_url, data1=get_time, data2=get_screenshot,
+    return render_template('result.html', data0=get_url, data1=get_time, data2=get_base64_image,
                            data3=prediction, data4=get_url_domain, data5=get_url_status, data6=get_url_content,
                            data7=get_url_ip, data8=get_url_redirect, data9=get_url_created, data10=get_url_country)
 
@@ -166,11 +151,11 @@ def dashboard():
 
     if 'email' in session:
         if session['email'] == "dafiq856@gmail.com":
-            
+
             data = {
-                "data0" : count_benign+count_malicious,
-                "data1" : count_benign,
-                "data2" : count_malicious,
+                "data0": count_benign+count_malicious,
+                "data1": count_benign,
+                "data2": count_malicious,
                 # "data3" : recently_scan
             }
             return render_template('dashboard.html', data=data)
@@ -189,16 +174,17 @@ def dashboard():
                 "SELECT COUNT(status) from url where status = 'malicious' and uid = %s", (uid['id'],))
             total_malicious = cur.fetchone()
             # print(total_malicious['COUNT(status)'])
-            cur.execute("SELECT urls, status from url where uid = %s",(uid['id'],))
+            cur.execute(
+                "SELECT urls, status from url where uid = %s", (uid['id'],))
             recent_scan = cur.fetchmany(7)
-            
+
             print(recent_scan)
 
             data = {
-                "data0" : total_benign['COUNT(status)']+total_malicious['COUNT(status)'],
-                "data1" : total_benign['COUNT(status)'],
-                "data2" : total_malicious['COUNT(status)'],
-                "data3" : recent_scan
+                "data0": total_benign['COUNT(status)']+total_malicious['COUNT(status)'],
+                "data1": total_benign['COUNT(status)'],
+                "data2": total_malicious['COUNT(status)'],
+                "data3": recent_scan
             }
             print(data['data3'])
             return render_template('dashboard.html', data=data)

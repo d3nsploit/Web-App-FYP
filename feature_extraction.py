@@ -8,6 +8,7 @@ import re
 from urllib.parse import urlparse
 import tldextract
 from nostril import nonsense
+import base64
 
 
 # Check url length (subdomain + domain + tld)
@@ -159,4 +160,5 @@ def load_url(url):
     return url_length(Extract_URL),ssl_is_Set(Parse_URL.scheme),port_num(Parse_URL.port),special_char(url),content_type(contentType),ip_address_url(Extract_URL.domain),alexa_rank(url),entrophy(Extract_URL),countRedirected,isRedirected,sensitive_word(url),count_js(soup),count_iframe(soup)
 
 
-# print(load_url("https://spectrum.um.edu.my"))
+
+# print(get_as_base64("https://api.screenshotmachine.com/?key=b14046&url=https://google.com&dimension=1024x768"))
