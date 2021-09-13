@@ -43,41 +43,31 @@
 <body>
 
 
-
   <nav class="nav bgcolor" id="navbar">
-    <div class="logo">
-      <a href="/#section1" id="logo">
-        <h1 style="font-size: 20px;"><i class="fas fa-code"></i> ScanMe</h1>
-      </a>
-    </div>
 
-    <div>
-      <ul class="nav__list" id="navlinkitems">
-        <li class="nav__item">
+
+    <div class="nav__list" id="navlinkitems">
+        <div class="nav__logo">
+          <a href="/#section1" id="logo">
+            <h1 style="font-size: 20px;"><i class="fas fa-code"></i> ScanMe</h1>
+          </a>
+        </div>
+
+        <div class="nav__items" id="myDiv">
           <a href="/#section1" class="nav__link" id="home">Home</a>
-        </li>
-        <li class="nav__item">
           <a href="/#section2" class="nav__link" id="services">Services</a>
-        </li>
-        <li class="nav__item">
           <a href="/#section3" class="nav__link" id="about">About Us</a>
-        </li>
-        <li class="nav__item">
           <a href="/#section4" class="nav__link" id="contact">Contact</a>
-        </li>
-        {% if session['fname'] %}
-        <li class="nav__item">
+          {% if session['fname'] %}
           <a href="/dashboard" class="nav__link" id="contact">Hi, {{ session['fname'] }}</a>
-        </li>
-        {% else %}
-        <li class="nav__item">
+          {% else %}
           <a href="/sign_in" class="nav__link" id="signin">Sign In</a>
-        </li>
-        <li class="nav__item">
           <a href="/sign_up" class="button-signup" style="margin-top: -15px;" id="signup">Sign Up</a>
-        </li>
-        {% endif %}
-      </ul>
+          {% endif %}
+          <button href="javascript:void(0);" class="nav-toggle" onclick="myFunction()">
+            <i class="fa fa-bars"></i>
+          </button>
+        </div>
     </div>
   </nav>
 
@@ -100,7 +90,7 @@
   <!-- Script to remove # in url -->
   <script>
     $(document).ready(function () {
-      const menuBtn = $('.nav__item');
+      const menuBtn = $('.nav__items');
       menuBtn.click(() => {
         setTimeout(() => {
           removeHash();
@@ -121,6 +111,22 @@
       $('nav').toggleClass('scrolled', $(this).scrollTop() > 50)
 
     });
+  </script>
+
+  <script>
+    function myFunction() {
+      var x = document.getElementById("myDiv");
+      var y = document.getElementById("navbar");
+
+      if (x.className === "nav__items" || y.className == "nav"){
+        x.className += " responsive";
+        y.className += " responsive";
+
+      } else {
+        x.className = "nav__items";
+        y.className = "nav";
+      }
+    }
   </script>
 
   {% block body %} {% endblock %}

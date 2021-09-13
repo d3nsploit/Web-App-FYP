@@ -37,7 +37,9 @@
   <div>
     <form method="POST" action="{{ url_for('result') }} ">
       <input class="scan-form" name="url" type="text" placeholder="Scan a URL" required />
-      <input class="btn-result" type="submit" value="ScanMe">
+      <button type="submit" class="btn btn-primary form-icon">
+        <i class="fa fa-search"></i>
+      </button>    
     </form>
   </div>
 
@@ -57,7 +59,7 @@
       <button onclick="togglePopup()" id="report" class="btn btn-danger btn-size">Report</button>
       <button onclick="downloadPDF()" id="download" class="btn btn-info btn-size">Download</button>
       <form action="{{ url_for('result') }}" method="POST" class="btn-size">
-        <button name="url" class="btn btn-warning" value="{{ data0 }}">Rescan</button>
+        <button name="url" class="btn btn-warning" style="color: #ffffff;" value="{{ data0 }}">Rescan</button>
       </form>
     </div>
 
@@ -73,10 +75,11 @@
       <p>VirusTotal</p>
       <p>URLScan.io</p>
       <p>Sucuri</p>
+      <hr>
     </div>
 
     <div class="column left-sum">
-      <h4 style="margin-bottom: 1rem;">Result Summary</h4>
+      <h4 class="h4-title">Result Summary</h4>
 
       <div class="grid-container">
         <div>URL Status</div>
