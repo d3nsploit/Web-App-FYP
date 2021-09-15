@@ -20,14 +20,14 @@
         <!-- MAIN TITLE ENDS HERE -->
 
         <!-- MAIN CARDS STARTS HERE -->
-        <div class="main__cards" style="grid-template-columns: 1fr 1fr 1fr;">
+        <div class="main__cards container-dashboard-url">
           <div class="card">
             <i
               class="fa fa-search fa-2x text-lightblue"
               aria-hidden="true"
             ></i>
             <div class="card_inner">
-              <p class="text-primary-p">Scanned URL</p>
+              <p class="text-primary-p">Total URL</p>
               <span class="font-bold text-title">{{ data.data0 }}</span>
             </div>
           </div>
@@ -58,15 +58,32 @@
 
         <!-- CHARTS STARTS HERE -->
         <!-- Daily report -->
-        <div class="charts" style="grid-template-columns: 1fr 1fr;">
+        <div class="charts container-dashboard">
           <div class="charts__left">
             <div class="charts__left__title">
+              {% if session['email'] == 'dafiq856@gmail.com'%}
               <div>
-                <h1>Daily Reports</h1>
+                <h1>ML Accuracy</h1>
               </div>
-              <i class="fa fa-calendar" aria-hidden="true"></i>
+              <i class="fa fa-bullseye" aria-hidden="true"></i>
             </div>
+            <div class="card">
+                <p class="text-primary-p">Current Accuracy</p>
+                <span class="font-bold text-title">98.01%</span>
+            </div> 
+            <br> <br>         
+            <div class="card">
+              <p class="text-primary-p">Predicted Accuracy</p>
+              <p class="text-primary-p-note">Calculated from user report</p>
+              <span class="font-bold text-title">95.01%</span>
+          </div>
+            {% else %}
+            <div>
+              <h1>Daily Report</h1>
+            </div>
+            <i class="fa fa-calendar" aria-hidden="true"></i>
             <div id="apex1"></div>
+            {% endif %}
           </div>
 
           <div class="charts__right">

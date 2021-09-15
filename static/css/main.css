@@ -724,6 +724,13 @@ a {
   transition: 0.3s ease;
 }
 
+.login-form button:hover {
+  color: #0568c1;
+  background: #ffffff;
+  border:solid 2px #0568c1;
+}
+
+
 p.account,
 p.account a {
   text-align: center;
@@ -894,6 +901,7 @@ p.account a:hover {
   border: 1px solid #0568c1;
   border-color: #0568c1;
   font-size: 13px;
+  padding: 0 12px;
 }
 
 .form-icon{
@@ -1092,28 +1100,32 @@ p.account a:hover {
   }
 
   #section1{
-    margin: 0 0 0 1.5rem;
+    margin: 0;
     align-items: flex-start;
     height: 80vh;
   }
 
+  
   .section1 .content-home h3{
     font-size: 24px ;
-    margin-top: 4rem;
+    margin: 3.8rem 0 0 0;
   }
+
   .section1 .content-home p{
     font-size: 18px ;
     text-align: justify;
-    padding: 0%;
+    width: 100%;
+    padding: 0;
   }
 
   .section1 .content-home .form-homepage{
-    width: 85%;
+    width: 100%;
+    
   }
 
   .section1 .content-home .btn-homepage{
     float: left;
-    width: 85%
+    width: 100%
   }
 
   .section1 .image{
