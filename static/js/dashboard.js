@@ -82,3 +82,12 @@ var options = {
       $(this).addClass('active_menu_link');
     })
   })
+
+//Pie chart
+  $(function() {
+    $('.chart').easyPieChart({
+      size: 200,
+      lineWidth: 20,
+      barColor: '#000000'
+    });
+});

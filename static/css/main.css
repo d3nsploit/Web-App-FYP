@@ -784,8 +784,8 @@ p.account a:hover {
 #webImage {
   border-radius: 25px;
   transition: 0.3s;
-  width: 80%;
-  height: 300px;
+  width: 70%;
+  height: auto;
   margin-top: .5em;
   margin-left: 5px;
 }
@@ -1331,4 +1331,14 @@ p.account a:hover {
     top: -10px;
     right: 5px;
   }
+
+  .form-img{
+    display: none;
+  }
+
+  .login-form{
+    padding-top: 11rem;
+  }
 }
+
+

@@ -36,6 +36,15 @@ body {
   font-weight: 700;
 }
 
+
+.text-primary-p-acuracy {
+  color: #a5aaad;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  margin-top: 1rem;
+}
+
 .text-primary-p-note {
   color: #a5aaad;
   font-size: 10px;
@@ -209,6 +218,28 @@ main {
   color: #a5aaad;
   font-size: 18px;
   font-weight: 700;
+}
+
+
+
+.box{
+  float: left;
+  width: 25%;
+  margin: 2rem 12%;
+}
+
+.box .chart{
+  position: relative;
+  width: 200px;
+  height: 200px;
+  text-align: center;
+  line-height: 200px;
+}
+
+.box canvas{
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 
@@ -533,3 +564,4 @@ tr:nth-child(even) {
   }
 
 }
+
