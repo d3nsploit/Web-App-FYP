@@ -96,18 +96,26 @@ a:hover,
   background-color: #000000;
 }
 
-
-
-
-
 /* End of Navbar */
+
+
+/* 404 page */
+
+.image-404{
+  padding: 150px 50px 0 50px;
+  text-align: center;
+}
+
+/* End of 404 */
+
+
+/* Homepage section size */
 
 section {
   height: 100vh;
   padding: 0 10vw;
 
 }
-
 
 
 h2 {

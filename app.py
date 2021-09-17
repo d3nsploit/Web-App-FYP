@@ -19,17 +19,10 @@ mysql = MySQL(app)
 
 count_benign = 0
 count_malicious = 0
-tempo = 0
-# recently_scan = ({
-#     0: {"urls" : "", "status":""},
-#     1: {"urls" : "", "status":""},
-#     2: {"urls" : "", "status":""},
-#     3: {"urls" : "", "status":""},
-#     4: {"urls" : "", "status":""},
-#     5: {"urls" : "", "status":""},
-#     6: {"urls" : "", "status":""},
-# })
-
+count = 0
+t = []
+k = {}
+recently_scan_dash = ()
 
 # Route to homepage
 @app.route('/')
@@ -40,7 +33,7 @@ def index():
 # Route to result page
 @app.route('/result', methods=['POST'])
 def result():
-    global count_benign, count_malicious
+    global count_benign, count_malicious, count, t, k, recently_scan_dash
 
     get_url = request.form['url']
     get_result = feature_extraction.load_url(get_url)
@@ -63,6 +56,7 @@ def result():
     get_screenshot = api_check.screenshot(get_url)
     get_base64_image = api_check.get_as_base64(get_screenshot)
 
+    # recently_scan.
 
     if prediction[0] == 'benign':
         count_benign += 1
@@ -70,15 +64,20 @@ def result():
     else:
         count_malicious += 1
 
-    # print(prediction[0]," ni predict")
-    # Track for session user
+    if count >= 6:
+        t.pop(0)
+    k['urls'] = get_url
+    k['status'] = prediction
+    t.append(k.copy())
+    count += 1
+
+    recently_scan_dash = tuple(t)
+
     if session.get('email') != None:
-        # print("hmm")
         cur = mysql.connection.cursor()
         cur.execute("SELECT id from users where email = %s",
                     (session['email'],))
         user = cur.fetchone()
-        # print(user['id'],"dyadadgasdyadg ",type(user['id']))
         cur.execute("INSERT INTO url (uid,urls,status) VALUES (%s,%s,%s)",
                     (user['id'], get_url, prediction[0],))
         mysql.connection.commit()
@@ -117,6 +116,7 @@ def signin():
         return render_template('signin.html')
 
 
+# Route to sign up page
 @app.route('/sign_up', methods=["GET", "POST"])
 def signup():
     if request.method == 'GET':
@@ -145,6 +145,7 @@ def signup():
         return render_template('signup.html')
 
 
+# Route to dashboard page
 @app.route('/dashboard')
 def dashboard():
     global recently_scan
@@ -156,8 +157,9 @@ def dashboard():
                 "data0": count_benign+count_malicious,
                 "data1": count_benign,
                 "data2": count_malicious,
-                # "data3" : recently_scan
+                "data3" : recently_scan_dash
             }
+            print(data['data3'])
             return render_template('dashboard.html', data=data)
         else:
             cur = mysql.connection.cursor()
@@ -190,13 +192,19 @@ def dashboard():
             return render_template('dashboard.html', data=data)
     else:
         flash("Please sign in")
-        return render_template('signin.html')
+        return redirect(url_for('signin'))
 
 
+# Route to 404 page
+@app.errorhandler(404)
+def error(e):
+    return render_template('404.html')
+
+# Route to home page 
 @app.route('/logout')
 def logout():
     session.clear()
-    return render_template('index.html')
+    return redirect(url_for('index'))
 
 
 @app.route('/users')
