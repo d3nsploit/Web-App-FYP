@@ -58,8 +58,8 @@
       <br>
       <button onclick="togglePopup()" id="report" class="btn btn-danger btn-size">Report</button>
       <button onclick="downloadPDF()" id="download" class="btn btn-info btn-size">Download</button>
-      <form action="{{ url_for('result') }}" method="POST" class="btn-size">
-        <button name="url" class="btn btn-warning" style="color: #ffffff;" value="{{ data0 }}">Rescan</button>
+      <form action="{{ url_for('result') }}" method="POST" style="display: inline-block;">
+        <button name="url" class="btn btn-warning btn-size" style="color: #ffffff;" value="{{ data0 }}">Rescan</button>
       </form>
     </div>
 

@@ -75,22 +75,22 @@ body {
   color: #3b9668;
 }
 
-.container-dashboard-url{
+.container-dashboard-url {
   grid-template-columns: 1fr 1fr 1fr;
 }
 
-.container-dashboard{
+.container-dashboard {
   grid-template-columns: 1fr 1fr;
 }
 
-.container-report{
+.container-report {
   grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
 .container {
   display: grid;
   height: 100vh;
-  grid-template-columns: 0.8fr 1fr 1fr 1fr;
+  grid-template-columns: 0.6fr 1fr 1fr 1fr;
   grid-template-rows: 0.2fr 3fr;
   grid-template-areas:
     "sidebar nav nav nav"
@@ -113,12 +113,12 @@ body {
   display: none;
 }
 
-.nav_icon > i {
+.nav_icon>i {
   font-size: 26px;
   color: #a5aaad;
 }
 
-.navbar__left > a {
+.navbar__left>a {
   margin-right: 30px;
   text-decoration: none;
   color: #a5aaad;
@@ -138,12 +138,12 @@ body {
   align-items: center;
 }
 
-.navbar__right > a {
+.navbar__right>a {
   margin-left: 20px;
   text-decoration: none;
 }
 
-.navbar__right > a > i {
+.navbar__right>a>i {
   color: #a5aaad;
   font-size: 16px;
   border-radius: 50px;
@@ -167,25 +167,25 @@ main {
   align-items: center;
 }
 
-.main__title > img {
+.main__title>img {
   max-height: 100px;
   object-fit: contain;
   margin-right: 20px;
 }
 
-.main__greeting > h1 {
+.main__greeting>h1 {
   font-size: 24px;
   color: #2e4a66;
   margin-bottom: 5px;
 }
 
-.main__greeting > p {
+.main__greeting>p {
   font-size: 14px;
   font-weight: 700;
   color: #a5aaad;
 }
 
-.main__cards{
+.main__cards {
   display: grid;
   gap: 30px;
   margin: 20px 0;
@@ -208,7 +208,7 @@ main {
   justify-content: space-between;
 }
 
-.api-key-p{
+.api-key-p {
   color: #000000;
   position: absolute;
   margin-left: 3rem;
@@ -222,13 +222,13 @@ main {
 
 
 
-.box{
+.box {
   float: left;
   width: 25%;
   margin: 2rem 12%;
 }
 
-.box .chart{
+.box .chart {
   position: relative;
   width: 200px;
   height: 200px;
@@ -236,14 +236,14 @@ main {
   line-height: 200px;
 }
 
-.box canvas{
+.box canvas {
   position: absolute;
   top: 0;
   left: 0;
 }
 
 
-.card_inner > span {
+.card_inner>span {
   font-size: 25px;
 }
 
@@ -266,19 +266,19 @@ main {
   justify-content: space-between;
 }
 
-.charts__left__title > div > h1 {
+.charts__left__title>div>h1 {
   font-size: 24px;
   color: #2e4a66;
   margin-bottom: 5px;
 }
 
-.charts__left__title > div > p {
+.charts__left__title>div>p {
   font-size: 14px;
   font-weight: 700;
   color: #a5aaad;
 }
 
-.charts__left__title > i {
+.charts__left__title>i {
   color: #ffffff;
   font-size: 20px;
   background: #ffc100;
@@ -302,19 +302,19 @@ main {
   justify-content: space-between;
 }
 
-.charts__right__title > div > h1 {
+.charts__right__title>div>h1 {
   font-size: 24px;
   color: #2e4a66;
   margin-bottom: 5px;
 }
 
-.charts__right__title > div > p {
+.charts__right__title>div>p {
   font-size: 14px;
   font-weight: 700;
   color: #a5aaad;
 }
 
-.charts__right__title > i {
+.charts__right__title>i {
   color: #ffffff;
   font-size: 20px;
   background: #39447a;
@@ -371,10 +371,10 @@ main {
 /*  SIDEBAR STARTS HERE  */
 
 #sidebar {
-  background: #020509;
+  background: #0042dd;
   grid-area: sidebar;
   overflow-y: auto;
-  padding: 20px;
+  padding: 40px;
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
 }
@@ -393,22 +393,22 @@ main {
   align-items: center;
 }
 
-.sidebar__title > div > img {
+.sidebar__title>div>img {
   width: 75px;
   object-fit: contain;
 }
 
-.sidebar__title > div > h1 {
-  font-size: 18px;
+.sidebar__title>div>h1 {
+  font-size: 22px;
   display: inline;
 }
 
-.sidebar__title > i {
+.sidebar__title>i {
   font-size: 18px;
   display: none;
 }
 
-.sidebar__menu > h2 {
+.sidebar__menu>h2 {
   color: #3ea175;
   font-size: 16px;
   margin-top: 15px;
@@ -421,7 +421,7 @@ main {
   color: #f3f4f6;
   padding: 10px;
   border-radius: 3px;
-  margin-bottom: 5px;
+  margin-bottom: 40px;
 }
 
 .active_menu_link {
@@ -433,13 +433,13 @@ main {
   color: #3ea175 !important;
 }
 
-.sidebar__link > a {
+.sidebar__link>a {
   text-decoration: none;
-  color: #a5aaad;
+  color: #ffffff;
   font-weight: 700;
 }
 
-.sidebar__link > i {
+.sidebar__link>i {
   margin-right: 10px;
   font-size: 18px;
 }
@@ -450,14 +450,14 @@ main {
   color: #e65061;
 }
 
-.sidebar__logout > a {
+.sidebar__logout>a {
   text-decoration: none;
   color: #e65061;
   font-weight: 700;
   text-transform: uppercase;
 }
 
-.sidebar__logout > i {
+.sidebar__logout>i {
   margin-right: 10px;
   font-size: 18px;
 }
@@ -477,22 +477,42 @@ table {
   table-layout: auto;
 }
 
-td, th {
-  border: 1px solid #dddddd;
+td,
+th {
   text-align: left;
-  padding: 3px;
-  text-overflow: ellipsis; 
-  white-space: nowrap; 
+  padding: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   overflow: hidden;
-  max-width: 200px;
-
+  max-width: 400px;
 }
 
 tr:nth-child(even) {
-  background-color: #dddddd;
+  background-color: #f1f6fc;
+}
+
+.td-status {
+ text-align: center;
+}
+
+.td-status > p {
+  padding: 4px 10px;
+  border-radius: 5px;
+  width: 100px;
 }
 
 /* End of Recent Scanned URL */
+
+
+/* Accuracy chart */
+
+.accuracy-chart{
+  display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+}
+
+/* End of accuracy chart */
 
 
 @media only screen and (max-width: 978px) {
@@ -509,7 +529,7 @@ tr:nth-child(even) {
     display: none;
   }
 
-  .sidebar__title > i {
+  .sidebar__title>i {
     display: inline;
   }
 
@@ -540,22 +560,26 @@ tr:nth-child(even) {
     font-size: 16px;
   }
 
-  .container-dashboard{
+  .container-dashboard {
     grid-template-columns: 1fr;
   }
 
-  .container-report{
-    grid-template-columns: 1fr 1fr;
-  }
-  
-  .container-dashboard-url{
+  .container-report {
     grid-template-columns: 1fr 1fr;
   }
 
-  .charts__left{
+  .container-dashboard-url {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .charts__left {
     padding: 0;
   }
-  
+
+  .accuracy-chart{
+    grid-template-columns: 1fr;
+
+  }
 }
 
 @media only screen and (max-width: 480px) {
@@ -564,4 +588,3 @@ tr:nth-child(even) {
   }
 
 }
-

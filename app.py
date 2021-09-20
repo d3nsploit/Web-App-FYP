@@ -20,8 +20,7 @@ mysql = MySQL(app)
 count_benign = 0
 count_malicious = 0
 count = 0
-t = []
-k = {}
+recent_url = []
 recently_scan_dash = ()
 
 # Route to homepage
@@ -33,7 +32,9 @@ def index():
 # Route to result page
 @app.route('/result', methods=['POST'])
 def result():
-    global count_benign, count_malicious, count, t, k, recently_scan_dash
+    global count_benign, count_malicious, count, recent_url, recently_scan_dash
+    temp = {}
+
 
     get_url = request.form['url']
     get_result = feature_extraction.load_url(get_url)
@@ -57,7 +58,6 @@ def result():
     get_base64_image = api_check.get_as_base64(get_screenshot)
 
     # recently_scan.
-
     if prediction[0] == 'benign':
         count_benign += 1
 
@@ -65,13 +65,13 @@ def result():
         count_malicious += 1
 
     if count >= 6:
-        t.pop(0)
-    k['urls'] = get_url
-    k['status'] = prediction
-    t.append(k.copy())
+        recent_url.pop(0)
+    temp['urls'] = get_url
+    temp['status'] = prediction[0]
+    recent_url.append(temp.copy())
     count += 1
+    recently_scan_dash = tuple(recent_url)
 
-    recently_scan_dash = tuple(t)
 
     if session.get('email') != None:
         cur = mysql.connection.cursor()
@@ -159,7 +159,7 @@ def dashboard():
                 "data2": count_malicious,
                 "data3" : recently_scan_dash
             }
-            print(data['data3'])
+            # print(data['data3'])
             return render_template('dashboard.html', data=data)
         else:
             cur = mysql.connection.cursor()
@@ -178,9 +178,9 @@ def dashboard():
             # print(total_malicious['COUNT(status)'])
             cur.execute(
                 "SELECT urls, status from url where uid = %s", (uid['id'],))
-            recent_scan = cur.fetchmany(7)
+            recent_scan = cur.fetchmany(10)
 
-            print(recent_scan)
+            # print(recent_scan)
 
             data = {
                 "data0": total_benign['COUNT(status)']+total_malicious['COUNT(status)'],
@@ -188,14 +188,14 @@ def dashboard():
                 "data2": total_malicious['COUNT(status)'],
                 "data3": recent_scan
             }
-            print(data['data3'])
+            # print(data['data3'])
             return render_template('dashboard.html', data=data)
     else:
         flash("Please sign in")
         return redirect(url_for('signin'))
 
 
-# Route to 404 page
+# # Route to 404 page
 @app.errorhandler(404)
 def error(e):
     return render_template('404.html')

@@ -919,11 +919,15 @@ p.account a:hover {
 }
 
 
+
 .btn-size {
   display: inline-block;
   text-align: center;
-  font-size: 20px;
+  font-size: 16px;
+  width: 100px;
+  padding: 10px 5px;
   color: #ffffff;
+  margin: 0 10px;
 }
 
 .h4-title{
