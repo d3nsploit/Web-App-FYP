@@ -54,7 +54,7 @@
           ></i>
         </div>
 
-        <div class="sidebar__menu">
+        <div class="sidebar__menu" id="sidebar__menu">
           <div class="sidebar__link">
             <i class="fa fa-home"></i>
             <a href="/">Homepage</a>
@@ -62,36 +62,36 @@
 
           <div class="sidebar__link">
             <i class="fa fa-tachometer"></i>
-            <a href="/dashboard">Dashboard</a>
+            <a href="/dashboard" id="okok6">Dashboard</a>
           </div>
 
           {% if session['email'] == 'dafiq856@gmail.com'%}
           <div class="sidebar__link">
             <i class="fa fa-users" aria-hidden="true"></i>
-            <a href="/users">Users</a>
+            <a href="/users" id="okok5">Users</a>
           </div>
 
           {% else %}
           <!-- onclick="location.href='/api'" -->
           <div class="sidebar__link">
             <i class="fa fa-cogs"></i>
-            <a href="/api">API</a>
+            <a href="/api" id="okok4">API</a>
           </div>
 
           <div class="sidebar__link">
             <i class="fa fa-puzzle-piece"></i>
-            <a href="/extension">Extension</a>
+            <a href="/extension" id="okok3">Extension</a>
           </div>
 
           {% endif %}
           <div class="sidebar__link">
             <i class="fa fa-bug"></i>
-            <a href="/report">Report</a>
+            <a href="/report" id="okok2">Report</a>
           </div>
 
           <div class="sidebar__link">
             <i class="fa fa-power-off"></i>
-            <a href="/logout">Log Out</a>
+            <a href="/logout" id="okok1">Log Out</a>
           </div>
           
         </div>
@@ -99,10 +99,12 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="http://code.jquery.com/jquery-3.3.1.js"></script>
+
     <script type="text/javascript" src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/piechart.js') }}"></script>
 
 
 
+  
   </body>
 </html>

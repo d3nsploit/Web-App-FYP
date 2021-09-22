@@ -53,11 +53,11 @@ def result():
     get_url_created = get_url_details[4]
     get_url_country = get_url_details[5]
     now = datetime.now()
-    get_time = now.strftime("%d/%m/%Y %H:%M:%S")
+    get_time = now.strftime("%Y-%m-%d %H:%M:%S")
     get_screenshot = api_check.screenshot(get_url)
     get_base64_image = api_check.get_as_base64(get_screenshot)
 
-    # recently_scan.
+    # recently_scan
     if prediction[0] == 'benign':
         count_benign += 1
 
@@ -78,8 +78,8 @@ def result():
         cur.execute("SELECT id from users where email = %s",
                     (session['email'],))
         user = cur.fetchone()
-        cur.execute("INSERT INTO url (uid,urls,status) VALUES (%s,%s,%s)",
-                    (user['id'], get_url, prediction[0],))
+        cur.execute("INSERT INTO url (uid,date,urls,status) VALUES (%s,%s,%s,%s)",
+                    (user['id'], get_time, get_url, prediction[0],))
         mysql.connection.commit()
         cur.close()
 

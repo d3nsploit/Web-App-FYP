@@ -1,4 +1,4 @@
-// This is for able to see chart. We are using Apex Chart. U can check the documentation of Apex Charts too..
+// Scanned URL for dashboard
 var dashboard = {
   series: [{
       name: "Benign",
@@ -50,37 +50,49 @@ var dashboard = {
 };
 
 
+// API usage charts
 var api = {
-  series: [{
-    name: 'series2',
-    data: [11, 32, 45, 32, 34, 52, 41]
-  }],
-    chart: {
-    height: 350,
-    type: 'area'
+  chart: {
+    height: 280,
+    type: "area",
+    toolbar: {
+      show: false
+    }
   },
   dataLabels: {
     enabled: false
   },
-  stroke: {
-    curve: 'smooth'
+  series: [{
+    name: "Series 1",
+    data: [45, 52, 38, 45, 19, 23, 2]
+  }],
+  fill: {
+    type: "gradient",
+    gradient: {
+      shadeIntensity: 1,
+      opacityFrom: 0.7,
+      opacityTo: 0.9,
+      stops: [0, 90, 100]
+    }
   },
   xaxis: {
-    type: 'datetime',
-    categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
-  },
-  tooltip: {
-    x: {
-      format: 'dd/MM/yy HH:mm'
-    },
-  },
-  };
+    categories: [
+      "01 Jan",
+      "02 Jan",
+      "03 Jan",
+      "04 Jan",
+      "05 Jan",
+      "06 Jan",
+      "07 Jan",
+      "08 Jan"
+    ]
+  }
+};
 
 
-
-  var ml_accuracy = {
-    series: [98],
-    chart: {
+var ml_accuracy = {
+  series: [98],
+  chart: {
     height: 250,
     type: 'radialBar',
   },
@@ -92,13 +104,13 @@ var api = {
     },
   },
   labels: ['ML Accuracy'],
-  };
+};
 
 
 
-  var ml_predict = {
-    series: [90],
-    chart: {
+var ml_predict = {
+  series: [90],
+  chart: {
     height: 250,
     type: 'radialBar',
   },
@@ -110,7 +122,7 @@ var api = {
     },
   },
   labels: ['ML Predicted'],
-  };
+};
 
 
 
@@ -149,13 +161,30 @@ function closeSidebar() {
   }
 }
 
+
+
+const currentLocation = location.href;
+const menuItem = document.querySelectorAll('div.sidebar__link');
+const menuItem2 = document.querySelectorAll('div.sidebar__link a');
+
+const menuLength = menuItem.length;
+
+for (let i=0; i < menuLength; i++){
+  if(menuItem2[i].href === currentLocation){
+    menuItem[i].classList.add("active_menu_link");
+  }
+}
 // Utk active navbar
-$(document).ready(function () {
-  $('.sidebar__link').on('click', function () {
-    $('div.sidebar__link.active_menu_link ').removeClass('active_menu_link');
-    $(this).addClass('active_menu_link');
-  })
-})
+// $(document).ready(function () {
+//   $(".sidebar__link").click(function () {
+//     $(".sidebar__link").removeClass("active_menu_link");
+//     $(this).addClass('active_menu_link');
+//   });
+// });
+
+
+
+
 
 //Pie chart
 $(function () {

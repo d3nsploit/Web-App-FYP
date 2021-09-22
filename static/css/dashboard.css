@@ -425,12 +425,12 @@ main {
 }
 
 .active_menu_link {
-  background: rgba(62, 161, 117, 0.3);
-  color: #3ea175;
+  background: #ffffff;
+  color: #265acc;
 }
 
-.active_menu_link a {
-  color: #3ea175 !important;
+.active_menu_link > a {
+  color: #265acc !important;
 }
 
 .sidebar__link>a {
