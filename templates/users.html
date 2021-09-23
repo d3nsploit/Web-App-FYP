@@ -29,7 +29,7 @@
             ></i>
             <div class="card_inner">
               <p class="text-primary-p">Registered Users</p>
-              <span class="font-bold text-title">3</span>
+              <span class="font-bold text-title">30</span>
             </div>
           </div>
 
@@ -40,7 +40,7 @@
             ></i>
             <div class="card_inner">
               <p class="text-primary-p">Active Users</p>
-              <span class="font-bold text-title">340</span>
+              <span class="font-bold text-title">15</span>
             </div>
           </div>
 
@@ -50,8 +50,8 @@
               aria-hidden="true"
             ></i>
             <div class="card_inner">
-              <p class="text-primary-p">Number of Likes</p>
-              <span class="font-bold text-title">645</span>
+              <p class="text-primary-p">Admin Users</p>
+              <span class="font-bold text-title">2</span>
             </div>
           </div>
         </div>
@@ -59,48 +59,42 @@
 
         <!-- CHARTS STARTS HERE -->
         <!-- Daily report -->
-        <div class="charts">
+        <div class="charts" style="grid-template-columns: 1fr;">
           <div class="charts__left">
-            <div class="charts__left__title">
-              <div>
-                <h1>Daily Reports</h1>
-                <p>Cupertino, California, USA</p>
-              </div>
-              <i class="fa fa-usd" aria-hidden="true"></i>
-            </div>
-            <div id="apex1"></div>
-          </div>
-
-          <div class="charts__right">
             <div class="charts__right__title">
               <div>
-                <h1>Stats Reports</h1>
-                <p>Cupertino, California, USA</p>
+                <h1>Reported URL</h1>
               </div>
-              <i class="fa fa-usd" aria-hidden="true"></i>
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
             </div>
 
             <!-- Stats Report -->
             <div class="charts__right__cards">
-              <div class="card1">
-                <h1>Income</h1>
-                <p>$75,300</p>
-              </div>
-
-              <div class="card2">
-                <h1>Sales</h1>
-                <p>$124,200</p>
-              </div>
-
-              <div class="card3">
-                <h1>Users</h1>
-                <p>3900</p>
-              </div>
-
-              <div class="card4">
-                <h1>Orders</h1>
-                <p>1881</p>
-              </div>
+              <table>
+                <tr>
+                  <th> </th>
+                  <th>Username</th>
+                  <th>Email</th>
+                  <th>User Role</th>
+                  <th>Reports</th>
+                  <th>Last Login</th>
+                </tr>
+                {% for x in data %}
+                <tr>
+                  <td>{{ x.urls }}</td>
+                  <td>10-02-2021</td>
+                  <td class="td-status">
+                    {% if x.status == 'valid' %}
+                    <p style="background-color: #c8e6c9; color: #388e3c;">{{ x.status }}</p>
+                    {% elif x.status == 'invalid' %}
+                    <p style="background-color: #ffcdd2; color: #c62828;">{{ x.status }}</p>
+                    {% else %}
+                    <p style="background-color: #fff8cd; color: #c6bb28;">{{ x.status }}</p>
+                    {% endif %}
+                  </td>
+                </tr>
+                {% endfor %}
+              </table>
             </div>
           </div>
         </div>

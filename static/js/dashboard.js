@@ -124,22 +124,24 @@ var ml_predict = {
   labels: ['ML Predicted'],
 };
 
+$(document).ready(function() {
+  if (window.location.pathname == '/dashboard') {
+    var chart = new ApexCharts(document.querySelector("#apex1"), dashboard);
+    chart.render();
+    
+    var chart = new ApexCharts(document.querySelector("#apex3"), ml_accuracy);
+    chart.render();
+    
+    var chart = new ApexCharts(document.querySelector("#apex4"), ml_predict);
+    chart.render();
+    
+  }else if(window.location.pathname == '/api'){
+    var chart = new ApexCharts(document.querySelector("#apex2"), api);
+    chart.render();
+}
+});
 
 
-
-
-
-var chart = new ApexCharts(document.querySelector("#apex1"), dashboard);
-chart.render();
-
-var chart = new ApexCharts(document.querySelector("#apex2"), api);
-chart.render();
-
-var chart = new ApexCharts(document.querySelector("#apex3"), ml_accuracy);
-chart.render();
-
-var chart = new ApexCharts(document.querySelector("#apex4"), ml_predict);
-chart.render();
 
 // Sidebar Toggle Codes;
 

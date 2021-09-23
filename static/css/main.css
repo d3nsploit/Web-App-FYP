@@ -102,12 +102,21 @@ a:hover,
 /* 404 page */
 
 .image-404{
-  padding: 150px 50px 0 50px;
+  padding: 100px 50px 0 50px;
   text-align: center;
 }
 
 /* End of 404 */
 
+
+.warning-message{
+  text-align: justify;
+  color: #721c24;
+  position: absolute;
+  margin: 70px 50px 0 0;
+  transition: opacity .15s linear;
+  width: 45%px;
+}
 
 /* Homepage section size */
 
@@ -517,7 +526,7 @@ hr.lines:before {
 
 /* Section 4 */
 #section4 {
-  height: 100vh;
+  height: 80vh;
   background: #163172;
   display: inline-block;
   width: 100%;
@@ -1351,6 +1360,12 @@ p.account a:hover {
   .login-form{
     padding-top: 11rem;
   }
+
+  .warning-message{
+    margin: 130px 50px 0 0;
+    text-align: unset;
+  }
+  
 }
 
 

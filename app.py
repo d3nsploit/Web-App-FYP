@@ -24,6 +24,8 @@ recent_url = []
 recently_scan_dash = ()
 
 # Route to homepage
+
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -32,60 +34,65 @@ def index():
 # Route to result page
 @app.route('/result', methods=['POST'])
 def result():
-    global count_benign, count_malicious, count, recent_url, recently_scan_dash
-    temp = {}
+    try:
+        global count_benign, count_malicious, count, recent_url, recently_scan_dash
+        temp = {}
 
+        get_url = request.form['url']
 
-    get_url = request.form['url']
-    get_result = feature_extraction.load_url(get_url)
-    arr = np.array([[get_result[0], get_result[1], get_result[2],
-                    get_result[3], get_result[4], get_result[5], get_result[6], get_result[7],
-                    get_result[8], get_result[9], get_result[10], get_result[11], get_result[12]]])
+        if get_url == "https://127.0.0.1" or get_url == "http://127.0.0.1" or get_url == "https://localhost" or get_url == "http://localhost":
+            return redirect(url_for('meme'))
+        get_result = feature_extraction.load_url(get_url)
+        arr = np.array([[get_result[0], get_result[1], get_result[2],
+                        get_result[3], get_result[4], get_result[5], get_result[6], get_result[7],
+                        get_result[8], get_result[9], get_result[10], get_result[11], get_result[12]]])
 
-    prediction = model.predict(arr)
+        prediction = model.predict(arr)
 
-    get_url_details = api_check.url_scraper(get_url)
-    get_url_domain = get_url_details[0]
-    get_url_status = get_url_details[1]
-    get_url_content = get_url_details[2]
-    get_url_ip = get_url_details[3]
-    get_url_redirect = get_result[8]
-    get_url_created = get_url_details[4]
-    get_url_country = get_url_details[5]
-    now = datetime.now()
-    get_time = now.strftime("%Y-%m-%d %H:%M:%S")
-    get_screenshot = api_check.screenshot(get_url)
-    get_base64_image = api_check.get_as_base64(get_screenshot)
+        get_url_details = api_check.url_scraper(get_url)
+        get_url_domain = get_url_details[0]
+        get_url_status = get_url_details[1]
+        get_url_content = get_url_details[2]
+        get_url_ip = get_url_details[3]
+        get_url_redirect = get_result[8]
+        get_url_created = get_url_details[4]
+        get_url_country = get_url_details[5]
+        now = datetime.now()
+        get_time = now.strftime("%Y-%m-%d %H:%M:%S")
+        get_screenshot = api_check.screenshot(get_url)
+        get_base64_image = api_check.get_as_base64(get_screenshot)
 
-    # recently_scan
-    if prediction[0] == 'benign':
-        count_benign += 1
+        # recently_scan
+        if prediction[0] == 'benign':
+            count_benign += 1
 
-    else:
-        count_malicious += 1
+        else:
+            count_malicious += 1
 
-    if count >= 6:
-        recent_url.pop(0)
-    temp['urls'] = get_url
-    temp['status'] = prediction[0]
-    recent_url.append(temp.copy())
-    count += 1
-    recently_scan_dash = tuple(recent_url)
+        if count >= 6:
+            recent_url.pop(0)
+        temp['urls'] = get_url
+        temp['status'] = prediction[0]
+        recent_url.append(temp.copy())
+        count += 1
+        recently_scan_dash = tuple(recent_url)
 
+        if session.get('email') != None:
+            cur = mysql.connection.cursor()
+            cur.execute("SELECT id from users where email = %s",
+                        (session['email'],))
+            user = cur.fetchone()
+            cur.execute("INSERT INTO url (uid,date,urls,status) VALUES (%s,%s,%s,%s)",
+                        (user['id'], get_time, get_url, prediction[0],))
+            mysql.connection.commit()
+            cur.close()
 
-    if session.get('email') != None:
-        cur = mysql.connection.cursor()
-        cur.execute("SELECT id from users where email = %s",
-                    (session['email'],))
-        user = cur.fetchone()
-        cur.execute("INSERT INTO url (uid,date,urls,status) VALUES (%s,%s,%s,%s)",
-                    (user['id'], get_time, get_url, prediction[0],))
-        mysql.connection.commit()
-        cur.close()
-
-    return render_template('result.html', data0=get_url, data1=get_time, data2=get_base64_image,
-                           data3=prediction, data4=get_url_domain, data5=get_url_status, data6=get_url_content,
-                           data7=get_url_ip, data8=get_url_redirect, data9=get_url_created, data10=get_url_country)
+        return render_template('result.html', data0=get_url, data1=get_time, data2=get_base64_image,
+                            data3=prediction, data4=get_url_domain, data5=get_url_status, data6=get_url_content,
+                            data7=get_url_ip, data8=get_url_redirect, data9=get_url_created, data10=get_url_country)
+    except:
+        flash("URL is not working. Please enter valid URL including http:// or https:// (e.g. https://google.com)")
+        return redirect(url_for('index'))
 
 
 # Route to sign in page
@@ -151,13 +158,13 @@ def dashboard():
     global recently_scan
 
     if 'email' in session:
-        if session['email'] == "dafiq856@gmail.com":
+        if session['email'] == "admin@gmail.com":
 
             data = {
                 "data0": count_benign+count_malicious,
                 "data1": count_benign,
                 "data2": count_malicious,
-                "data3" : recently_scan_dash
+                "data3": recently_scan_dash
             }
             # print(data['data3'])
             return render_template('dashboard.html', data=data)
@@ -200,7 +207,13 @@ def dashboard():
 def error(e):
     return render_template('404.html')
 
-# Route to home page 
+@app.route('/error')
+def meme():
+    return render_template('400.html')
+
+# Route to home page
+
+
 @app.route('/logout')
 def logout():
     session.clear()
@@ -224,7 +237,18 @@ def api():
 
 @app.route('/report')
 def report():
-    return render_template('report.html')
+    cur = mysql.connection.cursor()
+    # print(session['email'])
+    cur.execute("SELECT id from users where email = %s",
+                (session['email'],))
+    uid = cur.fetchone()
+    # print(uid['id'])
+
+    cur.execute(
+        "SELECT urls, status from url where uid = %s", (uid['id'],))
+    recent_scan = cur.fetchmany(10)
+
+    return render_template('report.html', data=recent_scan)
 
 
 if __name__ == '__main__':

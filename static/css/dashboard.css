@@ -195,7 +195,6 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  height: 70px;
   padding: 25px;
   border-radius: 5px;
   background: #ffffff;
@@ -208,14 +207,21 @@ main {
   justify-content: space-between;
 }
 
+.card_inner_api{
+  display: flex;
+  align-items: center;
+}
+
+
+
 .api-key-p {
+  flex: 2;
   color: #000000;
-  position: absolute;
-  margin-left: 3rem;
+  padding-left: 10px;
 }
 
 .api-key {
-  color: #a5aaad;
+  color: #3b3b3b;
   font-size: 18px;
   font-weight: 700;
 }

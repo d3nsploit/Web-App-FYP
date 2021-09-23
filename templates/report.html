@@ -12,7 +12,7 @@
         <div class="main__title">
             <img src="assets/hello.svg" alt="" />
           <div class="main__greeting">
-              <h1>Report</h1>
+              <h1>Total Reports</h1>
           </div>
       </div>
 
@@ -52,7 +52,7 @@
           </div>
           <div class="card">
             <i
-              class="fa fa-spinner fa-2x text-lightblue"
+              class="fa fa-spinner fa-2x text-yellow"
               aria-hidden="true"
             ></i>
             <div class="card_inner">
@@ -69,7 +69,7 @@
           <div class="charts__left">
             <div class="charts__right__title">
               <div>
-                <h1>Recent Scanned URL</h1>
+                <h1>Reported URL</h1>
               </div>
               <i class="fa fa-clock-o" aria-hidden="true"></i>
             </div>
@@ -79,50 +79,27 @@
               <table>
                 <tr>
                   <th>Url</th>
-                  <th>Age</th>
+                  <th>Date</th>
                   <th>Status</th>
                 </tr>
+                {% for x in data %}
                 <tr>
-                  <td>Alfrexaxads Futterdad dadad acace daedca dawdwd dwdwad kiste</td>
-                  <td>30 s</td>
-                  <td>Germany</td>
+                  <td>{{ x.urls }}</td>
+                  <td>10-02-2021</td>
+                  <td class="td-status">
+                    {% if x.status == 'valid' %}
+                    <p style="background-color: #c8e6c9; color: #388e3c;">{{ x.status }}</p>
+                    {% elif x.status == 'invalid' %}
+                    <p style="background-color: #ffcdd2; color: #c62828;">{{ x.status }}</p>
+                    {% else %}
+                    <p style="background-color: #fff8cd; color: #c6bb28;">{{ x.status }}</p>
+                    {% endif %}
+                  </td>
                 </tr>
-                <tr>
-                  <td>Centro comercial Moctezuma</td>
-                  <td>1 min</td>
-                  <td>Mexico</td>
-                </tr>
-                <tr>
-                  <td>Ernst Handel</td>
-                  <td>6 h</td>
-                  <td>Austria</td>
-                </tr>
-                <tr>
-                  <td>Island Trading</td>
-                  <td>2 d</td>
-                  <td>UK</td>
-                </tr>
-                <tr>
-                  <td>Laughing Bacchus Winecellars</td>
-                  <td>10 d</td>
-                  <td>Canada</td>
-                </tr>
-                <tr>
-                  <td>Magazzini Alimentari Riuniti</td>
-                  <td>10 d</td>
-                  <td>Italy</td>
-                </tr>
-                <tr>
-                  <td>Alfrexaxads Futterdad dadad acace daedca dawdwd dwdwad kiste</td>
-                  <td>30 s</td>
-                  <td>Germany</td>
-                </tr>
+                {% endfor %}
               </table>
-              
             </div>
           </div>
-
-        
         </div>
         <!-- CHARTS ENDS HERE -->
       </div>

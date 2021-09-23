@@ -25,6 +25,11 @@
                 <input name="url" type="text" class="form-homepage" placeholder="Scan a URL" required autofocus="">
                 <input class="btn-homepage" type="submit" value="Scan Now">
             </form>
+            {% for message in get_flashed_messages() %}
+            <div class="warning-message">
+                {{ message }}
+              </div>
+            {% endfor %}
         </div>
     </div>
 
