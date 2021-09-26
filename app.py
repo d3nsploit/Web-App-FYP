@@ -237,6 +237,7 @@ def api():
 
 @app.route('/report')
 def report():
+
     cur = mysql.connection.cursor()
     # print(session['email'])
     cur.execute("SELECT id from users where email = %s",
@@ -245,10 +246,29 @@ def report():
     # print(uid['id'])
 
     cur.execute(
-        "SELECT urls, status from url where uid = %s", (uid['id'],))
-    recent_scan = cur.fetchmany(10)
+        "SELECT url, status from report where uid = %s ORDER by date DESC", (uid['id'],))
+    recent_scan = cur.fetchall()
+    vld = "valid"
+    ivld = "invalid"
 
-    return render_template('report.html', data=recent_scan)
+    cur.execute("SELECT COUNT(uid) from report where uid = %s", (uid['id'],))
+    total_report = cur.fetchone()
+
+    cur.execute("SELECT COUNT(uid) from report where uid = %s and status =%s", (uid['id'],vld,))
+    valid_report = cur.fetchone()
+
+    cur.execute("SELECT COUNT(uid) from report where uid = %s and status =%s", (uid['id'],ivld,))
+    invalid_report = cur.fetchone()
+    
+    print(total_report)
+    data = {
+                "data0": valid_report['COUNT(uid)']+invalid_report['COUNT(uid)'],
+                "data1": valid_report['COUNT(uid)'],
+                "data2": invalid_report['COUNT(uid)'],
+                "data3": total_report['COUNT(uid)']-valid_report['COUNT(uid)']-invalid_report['COUNT(uid)'],
+                "data4" : recent_scan
+            }
+    return render_template('report.html', data=data)
 
 
 if __name__ == '__main__':

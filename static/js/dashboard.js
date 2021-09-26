@@ -196,3 +196,21 @@ $(function () {
     barColor: '#000000'
   });
 });
+
+
+
+$(document).ready(function() {
+  $('#report').DataTable({     
+    "aLengthMenu": [[10, 20, 30, -1], [10, 20, 30, "All"]],
+      "iDisplayLength": 10
+     }
+  );
+} );
+
+$(document).ready(function() {
+  $('#users').DataTable({     
+    "aLengthMenu": [[10, 20, 30, -1], [10, 20, 30, "All"]],
+      "iDisplayLength": 10
+     } 
+  );
+} );

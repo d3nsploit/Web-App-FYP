@@ -70,7 +70,8 @@
 
             <!-- Stats Report -->
             <div class="charts__right__cards">
-              <table>
+              <table id="users" class="table table-striped table-bordered" style="width:100%">
+                <thead>
                 <tr>
                   <th> </th>
                   <th>Username</th>
@@ -79,6 +80,8 @@
                   <th>Reports</th>
                   <th>Last Login</th>
                 </tr>
+                </thead>
+                <tbody>
                 {% for x in data %}
                 <tr>
                   <td>{{ x.urls }}</td>
@@ -94,6 +97,7 @@
                   </td>
                 </tr>
                 {% endfor %}
+              </tbody>
               </table>
             </div>
           </div>

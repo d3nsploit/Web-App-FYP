@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="shortcut icon" href="{{ url_for('static', filename='css/favicon.ico') }}">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='css/favicon.ico') }}">
 
 
   <!-- Bootstrap -->
@@ -16,7 +16,7 @@
   <!-- Navbar Baru -->
   <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
 
-
+  
 
   <!-- Download result -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
@@ -48,27 +48,27 @@
 
 
     <div class="nav__list" id="navlinkitems">
-        <div class="nav__logo">
-          <a href="/#section1" id="logo">
-            <h1 style="font-size: 20px;"><i class="fas fa-code"></i> ScanMe</h1>
-          </a>
-        </div>
+      <div class="nav__logo">
+        <a href="/#section1" id="logo">
+          <h1 style="font-size: 20px;"><i class="fas fa-code"></i> ScanMe</h1>
+        </a>
+      </div>
 
-        <div class="nav__items" id="myDiv">
-          <a href="/#section1" class="nav__link" id="home">Home</a>
-          <a href="/#section2" class="nav__link" id="services">Services</a>
-          <a href="/#section3" class="nav__link" id="about">About Us</a>
-          <a href="/#section4" class="nav__link" id="contact">Contact</a>
-          {% if session['fname'] %}
-          <a href="/dashboard" class="nav__link" id="contact">Hi, {{ session['fname'] }}</a>
-          {% else %}
-          <a href="/sign_in" class="nav__link" id="signin">Sign In</a>
-          <a href="/sign_up" class="button-signup" style="margin-top: -15px;" id="signup">Sign Up</a>
-          {% endif %}
-          <button href="javascript:void(0);" class="nav-toggle" onclick="myFunction()">
-            <i class="fa fa-bars"></i>
-          </button>
-        </div>
+      <div class="nav__items" id="myDiv">
+        <a href="/#section1" class="nav__link" id="home">Home</a>
+        <a href="/#section2" class="nav__link" id="services">Services</a>
+        <a href="/#section3" class="nav__link" id="about">About Us</a>
+        <a href="/#section4" class="nav__link" id="contact">Contact</a>
+        {% if session['fname'] %}
+        <a href="/dashboard" class="nav__link" id="contact">Hi, {{ session['fname'] }}</a>
+        {% else %}
+        <a href="/sign_in" class="nav__link" id="signin">Sign In</a>
+        <a href="/sign_up" class="button-signup" style="margin-top: -15px;" id="signup">Sign Up</a>
+        {% endif %}
+        <button href="javascript:void(0);" class="nav-toggle" onclick="myFunction()">
+          <i class="fa fa-bars"></i>
+        </button>
+      </div>
     </div>
   </nav>
 
@@ -85,7 +85,6 @@
   </script>
   <!--Penting-->
   <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
-
 
 
   <!-- Script to remove # in url -->
@@ -119,7 +118,7 @@
       var x = document.getElementById("myDiv");
       var y = document.getElementById("navbar");
 
-      if (x.className === "nav__items" || y.className == "nav"){
+      if (x.className === "nav__items" || y.className == "nav") {
         x.className += " responsive";
         y.className += " responsive";
 
