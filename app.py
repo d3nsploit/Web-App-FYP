@@ -88,8 +88,8 @@ def result():
             cur.close()
 
         return render_template('result.html', data0=get_url, data1=get_time, data2=get_base64_image,
-                            data3=prediction, data4=get_url_domain, data5=get_url_status, data6=get_url_content,
-                            data7=get_url_ip, data8=get_url_redirect, data9=get_url_created, data10=get_url_country)
+                               data3=prediction, data4=get_url_domain, data5=get_url_status, data6=get_url_content,
+                               data7=get_url_ip, data8=get_url_redirect, data9=get_url_created, data10=get_url_country)
     except:
         flash("URL is not working. Please enter valid URL including http:// or https:// (e.g. https://google.com)")
         return redirect(url_for('index'))
@@ -155,7 +155,6 @@ def signup():
 # Route to dashboard page
 @app.route('/dashboard')
 def dashboard():
-    global recently_scan
 
     if 'email' in session:
         if session['email'] == "admin@gmail.com":
@@ -207,6 +206,7 @@ def dashboard():
 def error(e):
     return render_template('404.html')
 
+
 @app.route('/error')
 def meme():
     return render_template('400.html')
@@ -222,7 +222,12 @@ def logout():
 
 @app.route('/users')
 def users():
-    return render_template('users.html')
+    cur = mysql.connection.cursor()
+    cur.execute(
+        "SELECT username, email, role , COUNT(*) AS number_of_report FROM users, report WHERE users.id = report.uid GROUP BY username order by users.id ")
+    total_users = cur.fetchall()
+
+    return render_template('users.html', data=total_users)
 
 
 @app.route('/extension')
@@ -248,26 +253,26 @@ def report():
     cur.execute(
         "SELECT url, status from report where uid = %s ORDER by date DESC", (uid['id'],))
     recent_scan = cur.fetchall()
-    vld = "valid"
-    ivld = "invalid"
 
     cur.execute("SELECT COUNT(uid) from report where uid = %s", (uid['id'],))
     total_report = cur.fetchone()
 
-    cur.execute("SELECT COUNT(uid) from report where uid = %s and status =%s", (uid['id'],vld,))
+    cur.execute(
+        "SELECT COUNT(uid) from report where uid = %s and status ='valid'", (uid['id'],))
     valid_report = cur.fetchone()
 
-    cur.execute("SELECT COUNT(uid) from report where uid = %s and status =%s", (uid['id'],ivld,))
+    cur.execute(
+        "SELECT COUNT(uid) from report where uid = %s and status ='invalid'", (uid['id'],))
     invalid_report = cur.fetchone()
-    
-    print(total_report)
+
+    # print(recent_scan)
     data = {
-                "data0": valid_report['COUNT(uid)']+invalid_report['COUNT(uid)'],
-                "data1": valid_report['COUNT(uid)'],
-                "data2": invalid_report['COUNT(uid)'],
-                "data3": total_report['COUNT(uid)']-valid_report['COUNT(uid)']-invalid_report['COUNT(uid)'],
-                "data4" : recent_scan
-            }
+        "data0": valid_report['COUNT(uid)']+invalid_report['COUNT(uid)'],
+        "data1": valid_report['COUNT(uid)'],
+        "data2": invalid_report['COUNT(uid)'],
+        "data3": total_report['COUNT(uid)']-valid_report['COUNT(uid)']-invalid_report['COUNT(uid)'],
+        "data4": recent_scan
+    }
     return render_template('report.html', data=data)
 
 

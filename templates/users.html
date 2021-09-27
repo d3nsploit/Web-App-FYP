@@ -63,7 +63,7 @@
           <div class="charts__left">
             <div class="charts__right__title">
               <div>
-                <h1>Reported URL</h1>
+                <h1>List of Users</h1>
               </div>
               <i class="fa fa-clock-o" aria-hidden="true"></i>
             </div>
@@ -84,8 +84,11 @@
                 <tbody>
                 {% for x in data %}
                 <tr>
-                  <td>{{ x.urls }}</td>
-                  <td>10-02-2021</td>
+                  <td>gmbar</td>
+                  <td>{{ x.username }}</td>
+                  <td>{{ x.email }}</td>
+                  <td>{{ x.role }}</td>
+                  <td>{{ x.number_of_report }}</td>
                   <td class="td-status">
                     {% if x.status == 'valid' %}
                     <p style="background-color: #c8e6c9; color: #388e3c;">{{ x.status }}</p>
