@@ -111,11 +111,12 @@ a:hover,
 
 .warning-message{
   text-align: justify;
-  color: #721c24;
+  color: #db071c;
   position: absolute;
   margin: 70px 50px 0 0;
   transition: opacity .15s linear;
-  width: 45%px;
+  width: 45%;
+  font-size: 16px;
 }
 
 /* Homepage section size */
@@ -526,7 +527,7 @@ hr.lines:before {
 
 /* Section 4 */
 #section4 {
-  height: 80vh;
+  height: 100vh;
   background: #163172;
   display: inline-block;
   width: 100%;

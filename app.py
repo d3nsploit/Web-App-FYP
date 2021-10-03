@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request, url_for, redirect, session, flash
+from flask import Flask, json, render_template, request, url_for, redirect, session, flash, jsonify
 from flask_mysqldb import MySQL, MySQLdb
+from requests.api import get
 import api_check
 from datetime import datetime
 import bcrypt
@@ -10,6 +11,11 @@ import feature_extraction
 model = pickle.load(open('url_predict.pkl', 'rb'))
 
 app = Flask(__name__)
+
+# Unsort json
+app.config['JSON_SORT_KEYS'] = False
+
+
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
@@ -22,7 +28,7 @@ count_malicious = 0
 count = 0
 recent_url = []
 recently_scan_dash = ()
-
+ses_created = 0
 # Route to homepage
 
 
@@ -91,13 +97,63 @@ def result():
                                data3=prediction, data4=get_url_domain, data5=get_url_status, data6=get_url_content,
                                data7=get_url_ip, data8=get_url_redirect, data9=get_url_created, data10=get_url_country)
     except:
-        flash("URL is not working. Please enter valid URL including http:// or https:// (e.g. https://google.com)")
+        flash("Please enter valid URL including http:// or https://")
         return redirect(url_for('index'))
+
+
+@app.route('/userapi',methods=["POST"])
+def apiuser():
+    try:
+        data = request.get_json()
+
+        get_url = data['urls']
+        if get_url.find("://127.0.0.1") != -1 or get_url.find("://localhost") != -1:
+            return jsonify({"Error": "Invalid URL"})
+        get_result = feature_extraction.load_url(get_url)
+        arr = np.array([[get_result[0], get_result[1], get_result[2],
+                        get_result[3], get_result[4], get_result[5], get_result[6], get_result[7],
+                        get_result[8], get_result[9], get_result[10], get_result[11], get_result[12]]])
+
+        prediction = model.predict(arr)
+
+        get_url_details = api_check.url_scraper(get_url)
+        get_url_domain = get_url_details[0]
+        get_url_status = get_url_details[1]
+        get_url_content = str(get_url_details[2])+" bytes"
+        get_url_ip = get_url_details[3]
+        get_url_redirect = get_result[8]
+        get_url_created = get_url_details[4]
+        get_url_country = get_url_details[5]
+        now = datetime.now()
+        get_time = now.strftime("%Y-%m-%d %H:%M:%S")
+
+        return jsonify({
+            "Data": [{
+                "Scanned on": get_time,
+                "Scanned URL": get_url,
+                "Status-Code": get_url_status,
+            }],
+            "URL Information": [{
+                "Main-Domain": get_url_domain,
+                "Content-Length": get_url_content,
+                "IP-Address": get_url_ip,
+                "Date Created": get_url_created,
+                "Country": get_url_country,
+                "Number of redirections": get_url_redirect
+            }],
+            "Scanner Result": [{
+                "Status Prediction": prediction[0]
+            }]
+        })
+
+    except:
+        return jsonify({"Error": "Invalid URL"})
 
 
 # Route to sign in page
 @app.route('/sign_in', methods=["GET", "POST"])
 def signin():
+    global ses_created
     if request.method == "POST":
         emailusername = request.form['emailusername']
         password = request.form['password'].encode('utf-8')
@@ -112,6 +168,7 @@ def signin():
             if temp == user['password'].encode('utf-8'):
                 session['email'] = user['email']
                 session['fname'] = user['fname']
+                ses_created += 1
                 return redirect(url_for('dashboard'))
             else:
                 flash("Email or password is incorrect")
@@ -142,12 +199,17 @@ def signup():
             flash("The account is already exist!")
             cur.close()
         else:
-            cur.execute("INSERT INTO users (fname,lname,email,username,password) VALUES (%s,%s,%s,%s,%s)",
-                        (fname, lname, email, username, hash_password,))
+            global ses_created
+            role = "user"
+            lastseen = datetime.now()
+            get_time = lastseen.strftime("%Y-%m-%d %H:%M:%S")
+            cur.execute("INSERT INTO users (fname,lname,email,role,username,password,lastseen) VALUES (%s,%s,%s,%s,%s,%s,%s)",
+                        (fname, lname, email, role, username, hash_password, get_time,))
             mysql.connection.commit()
             cur.close()
             session['email'] = email
             session['fname'] = fname
+            ses_created += 1
             flash("The account created successfully.")
         return render_template('signup.html')
 
@@ -211,23 +273,44 @@ def error(e):
 def meme():
     return render_template('400.html')
 
+
 # Route to home page
-
-
 @app.route('/logout')
 def logout():
+    global ses_created
+    lastseen = datetime.now()
+    get_time = lastseen.strftime("%Y-%m-%d %H:%M:%S")
+    cur = mysql.connection.cursor()
+    # print(session['email'])
+    cur.execute("UPDATE users SET lastseen = %s where email = %s",
+                (get_time, session['email'],))
+    mysql.connection.commit()
+    ses_created -= 1
     session.clear()
     return redirect(url_for('index'))
 
 
 @app.route('/users')
 def users():
+    global ses_created
     cur = mysql.connection.cursor()
     cur.execute(
-        "SELECT username, email, role , COUNT(*) AS number_of_report FROM users, report WHERE users.id = report.uid GROUP BY username order by users.id ")
+        "SELECT username, email, role , COUNT(report.uid) AS number_of_report, lastseen FROM users left join report on users.id = report.uid GROUP BY username order by users.id")
     total_users = cur.fetchall()
 
-    return render_template('users.html', data=total_users)
+    cur.execute("SELECT COUNT(id) from users")
+    num_user = cur.fetchone()
+
+    cur.execute("SELECT COUNT(id) from users where role = 'admin'")
+    num_admin = cur.fetchone()
+
+    data = {
+        "data0": total_users,
+        "data1": num_user['COUNT(id)'],
+        "data2": num_admin['COUNT(id)'],
+        "data3": ses_created
+    }
+    return render_template('users.html', data=data)
 
 
 @app.route('/extension')
@@ -242,30 +325,52 @@ def api():
 
 @app.route('/report')
 def report():
+    if session['email'] == "admin@gmail.com":
+        cur = mysql.connection.cursor()
+        # print(session['email'])
 
-    cur = mysql.connection.cursor()
-    # print(session['email'])
-    cur.execute("SELECT id from users where email = %s",
-                (session['email'],))
-    uid = cur.fetchone()
-    # print(uid['id'])
+        cur.execute(
+            "SELECT url, status from report ORDER by date DESC")
+        recent_scan = cur.fetchall()
 
-    cur.execute(
-        "SELECT url, status from report where uid = %s ORDER by date DESC", (uid['id'],))
-    recent_scan = cur.fetchall()
+        cur.execute("SELECT COUNT(uid) from report ")
+        total_report = cur.fetchone()
 
-    cur.execute("SELECT COUNT(uid) from report where uid = %s", (uid['id'],))
-    total_report = cur.fetchone()
+        cur.execute(
+            "SELECT COUNT(uid) from report where status ='valid'")
+        valid_report = cur.fetchone()
 
-    cur.execute(
-        "SELECT COUNT(uid) from report where uid = %s and status ='valid'", (uid['id'],))
-    valid_report = cur.fetchone()
+        cur.execute(
+            "SELECT COUNT(uid) from report where status ='invalid'")
+        invalid_report = cur.fetchone()
 
-    cur.execute(
-        "SELECT COUNT(uid) from report where uid = %s and status ='invalid'", (uid['id'],))
-    invalid_report = cur.fetchone()
+        # print(recent_scan)
 
-    # print(recent_scan)
+    else:
+        cur = mysql.connection.cursor()
+        # print(session['email'])
+        cur.execute("SELECT id from users where email = %s",
+                    (session['email'],))
+        uid = cur.fetchone()
+        # print(uid['id'])
+
+        cur.execute(
+            "SELECT url, status from report where uid = %s ORDER by date DESC", (uid['id'],))
+        recent_scan = cur.fetchall()
+
+        cur.execute(
+            "SELECT COUNT(uid) from report where uid = %s", (uid['id'],))
+        total_report = cur.fetchone()
+
+        cur.execute(
+            "SELECT COUNT(uid) from report where uid = %s and status ='valid'", (uid['id'],))
+        valid_report = cur.fetchone()
+
+        cur.execute(
+            "SELECT COUNT(uid) from report where uid = %s and status ='invalid'", (uid['id'],))
+        invalid_report = cur.fetchone()
+
+        # print(recent_scan)
     data = {
         "data0": valid_report['COUNT(uid)']+invalid_report['COUNT(uid)'],
         "data1": valid_report['COUNT(uid)'],

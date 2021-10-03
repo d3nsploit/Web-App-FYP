@@ -61,6 +61,7 @@ def url_scraper(user_url):
 
     except:
         print("Error")
+    # print(domainName, statusCode, contentLength, urlIP, urlCreated, urlCountry)
     return domainName, statusCode, contentLength, urlIP, urlCreated, urlCountry
 
 
@@ -98,3 +99,6 @@ def generate_screenshot_api_url(customer_key, secret_phrase, options):
 
 def get_as_base64(url):
    return "data:image/jpeg;base64,"+base64.b64encode(requests.get(url).content).decode('utf-8')
+
+
+# url_scraper("https://amalgjose.com/2021/08/08/how-to-check-the-version-of-flask-in-python/")

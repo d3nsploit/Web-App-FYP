@@ -9,6 +9,7 @@ from urllib.parse import urlparse
 import tldextract
 from nostril import nonsense
 import base64
+import ssl
 
 
 # Check url length (subdomain + domain + tld)
@@ -151,14 +152,16 @@ def load_url(url):
 
     Extract_URL = tldextract.extract(url)
     Parse_URL = urlparse(url)
-    URL_Parse = urllib.request.urlopen(req)
+    gcontext = ssl.SSLContext() #disable SSL
+    URL_Parse = urllib.request.urlopen(req,context=gcontext)
     contentType = URL_Parse.info().get_content_type()
     webContent = URL_Parse.read()
     soup = bs(webContent, "html.parser",from_encoding="iso-8859-1")
     countRedirected, isRedirected = check_redirected(old_url)
+    print(url_length(Extract_URL),ssl_is_Set(Parse_URL.scheme),port_num(Parse_URL.port),special_char(url),content_type(contentType),ip_address_url(Extract_URL.domain),alexa_rank(url),entrophy(Extract_URL),countRedirected,isRedirected,sensitive_word(url),count_js(soup),count_iframe(soup))
 
     return url_length(Extract_URL),ssl_is_Set(Parse_URL.scheme),port_num(Parse_URL.port),special_char(url),content_type(contentType),ip_address_url(Extract_URL.domain),alexa_rank(url),entrophy(Extract_URL),countRedirected,isRedirected,sensitive_word(url),count_js(soup),count_iframe(soup)
 
 
-
+# print(load_url("https://spectrum.um.edu.my"))
 # print(get_as_base64("https://api.screenshotmachine.com/?key=b14046&url=https://google.com&dimension=1024x768"))

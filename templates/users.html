@@ -29,7 +29,7 @@
             ></i>
             <div class="card_inner">
               <p class="text-primary-p">Registered Users</p>
-              <span class="font-bold text-title">30</span>
+              <span class="font-bold text-title">{{ data.data1 }}</span>
             </div>
           </div>
 
@@ -40,7 +40,7 @@
             ></i>
             <div class="card_inner">
               <p class="text-primary-p">Active Users</p>
-              <span class="font-bold text-title">15</span>
+              <span class="font-bold text-title">{{ data.data3 }}</span>
             </div>
           </div>
 
@@ -51,7 +51,7 @@
             ></i>
             <div class="card_inner">
               <p class="text-primary-p">Admin Users</p>
-              <span class="font-bold text-title">2</span>
+              <span class="font-bold text-title">{{ data.data2 }}</span>
             </div>
           </div>
         </div>
@@ -82,22 +82,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for x in data %}
+                {% for x in data.data0 %}
                 <tr>
                   <td>gmbar</td>
                   <td>{{ x.username }}</td>
                   <td>{{ x.email }}</td>
                   <td>{{ x.role }}</td>
                   <td>{{ x.number_of_report }}</td>
-                  <td class="td-status">
-                    {% if x.status == 'valid' %}
-                    <p style="background-color: #c8e6c9; color: #388e3c;">{{ x.status }}</p>
-                    {% elif x.status == 'invalid' %}
-                    <p style="background-color: #ffcdd2; color: #c62828;">{{ x.status }}</p>
-                    {% else %}
-                    <p style="background-color: #fff8cd; color: #c6bb28;">{{ x.status }}</p>
-                    {% endif %}
-                  </td>
+                  <td>{{ x.lastseen }}</td>
                 </tr>
                 {% endfor %}
               </tbody>
