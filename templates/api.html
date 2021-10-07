@@ -20,7 +20,7 @@
       <div class="card">
         <div class="card_inner_api">
           <p class="api-key">Key:</p>
-          <p class="api-key-p" id="apikey" style="line-height: 50px;">babhdd-defnfenf-fefeif32-32424</p>
+          <p class="api-key-p" id="apikey" style="line-height: 50px;">{{ data }}</p>
           <button onclick="CopyToClipboard('apikey');return false;">Copy <i class="fa fa-clipboard"></i>
           </button>
         </div>
@@ -39,7 +39,7 @@
           <div id="apex2"></div>
         </div>
       </div>
-  </div>
+    </div>
 </main>
 
 <script>
@@ -53,4 +53,8 @@
   }
 </script>
 
+<script>
+  var date_api = JSON.parse('{{ data2 | tojson | safe}}');
+  var num_api = JSON.parse('{{ data3 | tojson | safe}}');
+</script>
 {% endblock %}

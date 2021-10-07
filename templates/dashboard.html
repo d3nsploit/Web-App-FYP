@@ -14,10 +14,10 @@
       <div class="main__greeting">
         {% if session['email'] == 'admin@gmail.com'%}
         <h1>Hello Admin</h1>
-        <p>Welcome to admin dashboard</p>
+        <p id="test123">Welcome to admin dashboard</p>
         {% else %}
         <h1>Hello {{ session['fname'] }}</h1>
-        <p>Welcome to your dashboard</p>
+        <p id="test123">Welcome to your dashboard</p>
         {% endif%}
       </div>
     </div>
@@ -118,7 +118,9 @@
     <!-- CHARTS ENDS HERE -->
   </div>
 </main>
-
+<script>
+  	var is_admin = document.getElementById("test123").innerText;
+</script>
 
 
 {% endblock %}

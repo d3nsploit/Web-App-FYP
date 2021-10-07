@@ -8,29 +8,26 @@
 
 {% block body %}
 
-<div class="popup" id="popup-1">
+<div class="popup" id="popup-1" style="color: #000000;">
   <div class="overlay"></div>
   <div class="content">
     <div class="close-btn" onclick="togglePopup()">×</div>
     {% if session%}
-    <h1>Report this result</h1>
-    <div class="grid-container" style="color: #000000;">
-      <div>URL</div>
-      <div>{{ data0 }}</div>
-      <div>Username</div>
-      <div>{{ session['fname'] }}</div>
-      <div>Details</div>
-      <div>
-        <form method="POST" action="{{ url_for('result') }}">
-          <textarea class="popup-input popup-box" placeholder="Details of report" required></textarea>
-          <input class="popup-btn" type="submit" value="Submit">
-        </form>
-      </div>
+    <h3>Report this result</h3>
+    <div class="grid-container2">
+      <form method="POST" action="{{ url_for('represult') }}">
+        <label>URL:</label>
+        <input type="text" name="url-rep" value="{{ data0 }}" readonly style="width: 100%; border-color: #000000;border-width: 1.5px;"><br><br>
+        <label>Details of report:</label>
+        <textarea class="popup-input popup-box" name="detail-rep" placeholder="Details of report"
+          required></textarea>
+        <input class="popup-btn" type="submit" value="Submit">
+      </form>
     </div>
-    {% else %}
-    <h4 style="text-align: center;">Please Sign-in</h4>
-    {% endif %}
   </div>
+  {% else %}
+  <h4 style="text-align: center;">Please Sign-in</h4>
+  {% endif %}
 </div>
 
 <div class="result-page">
@@ -39,7 +36,7 @@
       <input class="scan-form" name="url" type="text" placeholder="Scan a URL" required />
       <button type="submit" class="btn btn-primary form-icon">
         <i class="fa fa-search"></i>
-      </button>    
+      </button>
     </form>
   </div>
 
@@ -119,7 +116,6 @@
 
 
   <script>
-
     var modal = document.getElementById("myModal");
     var img = document.getElementById("webImage");
     var modalImg = document.getElementById("img01");

@@ -1,0 +1,3 @@
+[console_scripts]
+nimporter = nimporter_cli:main
+

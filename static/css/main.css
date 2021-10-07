@@ -1000,6 +1000,15 @@ p.account a:hover {
 }
 
 
+.grid-container2 {
+  display: grid;
+  grid-template-columns: 100% 0;
+  grid-gap: 10px;
+  padding: 10px;
+}
+
+
+
 .popup .overlay {
   position: fixed;
   top: 0px;
@@ -1063,10 +1072,11 @@ p.account a:hover {
   font-size: .7rem;
   color: var(--black);
   border-radius: .5rem;
-  border-color: #a7a7a7;
+  border-color: #000000;
   background: #ffffff;
   text-transform: none;
   width: 100%;
+  border-width: 1.5px;
   outline: none;
   color: #000000;
 }

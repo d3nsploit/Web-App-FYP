@@ -2,10 +2,12 @@ from flask import Flask, json, render_template, request, url_for, redirect, sess
 from flask_mysqldb import MySQL, MySQLdb
 from requests.api import get
 import api_check
-from datetime import datetime
+from datetime import datetime, date, timedelta
 import bcrypt
 import numpy as np
 import pickle
+import string
+import random
 import feature_extraction
 
 model = pickle.load(open('url_predict.pkl', 'rb'))
@@ -32,6 +34,17 @@ ses_created = 0
 # Route to homepage
 
 
+def id_generator(size=10, chars=string.ascii_uppercase + string.digits):
+    return ''.join(random.choice(chars) for _ in range(size))
+
+
+def date_range(start_date):
+    number_of_days = 7
+    date_list = [(start_date - timedelta(days=day)).isoformat()
+                 for day in range(number_of_days)]
+    return date_list
+
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -46,7 +59,7 @@ def result():
 
         get_url = request.form['url']
 
-        if get_url == "https://127.0.0.1" or get_url == "http://127.0.0.1" or get_url == "https://localhost" or get_url == "http://localhost":
+        if get_url.find("://127.0.0.1") != -1 or get_url.find("://localhost") != -1:
             return redirect(url_for('meme'))
         get_result = feature_extraction.load_url(get_url)
         arr = np.array([[get_result[0], get_result[1], get_result[2],
@@ -101,14 +114,44 @@ def result():
         return redirect(url_for('index'))
 
 
-@app.route('/userapi',methods=["POST"])
+@app.route('/report/result', methods=["POST"])
+def represult():
+    report_url = request.form['url-rep']
+    report_detail = request.form['detail-rep']
+    report_status = "processing"
+
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT id from users where email = %s",
+                        (session['email'],))
+    user = cur.fetchone()
+
+    cur.execute("INSERT INTO report (uid,date,url,details,status) VALUES (%s,%s,%s,%s,%s)",
+                        (user['id'], date.today(), report_url, report_detail,report_status,))
+
+    mysql.connection.commit()
+
+    return redirect(url_for('index'))
+
+
+@app.route('/userapi', methods=["POST"])
 def apiuser():
     try:
         data = request.get_json()
 
         get_url = data['urls']
+        get_apikey = data['apikey']
+
+        cur = mysql.connection.cursor()
+        api_exist = cur.execute(
+            "SELECT apikey FROM users WHERE apikey=%s", (get_apikey,))
+        # print(api_exist)
+
+        if api_exist == 0:
+            return jsonify({"Error": "Invalid API Key"})
+
         if get_url.find("://127.0.0.1") != -1 or get_url.find("://localhost") != -1:
             return jsonify({"Error": "Invalid URL"})
+
         get_result = feature_extraction.load_url(get_url)
         arr = np.array([[get_result[0], get_result[1], get_result[2],
                         get_result[3], get_result[4], get_result[5], get_result[6], get_result[7],
@@ -126,6 +169,25 @@ def apiuser():
         get_url_country = get_url_details[5]
         now = datetime.now()
         get_time = now.strftime("%Y-%m-%d %H:%M:%S")
+
+        cur.execute("SELECT max(date) from api where apikey = %s",
+                    (get_apikey,))
+        date_now = cur.fetchone()['max(date)']
+
+        if date.today() == date_now:
+            cur.execute("SELECT count from api where apikey = %s and date = %s",
+                        (get_apikey, date.today(),))
+            count_api = cur.fetchone()['count']
+            count_api += 1
+            cur.execute("UPDATE api SET count=%s where apikey = %s and date = %s",
+                        (count_api, get_apikey, date.today(),))
+
+        else:
+            count_api = 1
+            cur.execute("INSERT INTO api (date,apikey,count) VALUES (%s,%s,%s)",
+                        (date.today(), get_apikey, count_api,))
+
+        mysql.connection.commit()
 
         return jsonify({
             "Data": [{
@@ -201,10 +263,21 @@ def signup():
         else:
             global ses_created
             role = "user"
+            gen_key = 1
+            random_key = id_generator()
+
+            while(gen_key):
+                exist_key = cur.execute(
+                    "SELECT apikey FROM users WHERE apikey=%s", (random_key,))
+                if exist_key == 1:
+                    random_key = id_generator()
+                else:
+                    gen_key = 0
+
             lastseen = datetime.now()
             get_time = lastseen.strftime("%Y-%m-%d %H:%M:%S")
-            cur.execute("INSERT INTO users (fname,lname,email,role,username,password,lastseen) VALUES (%s,%s,%s,%s,%s,%s,%s)",
-                        (fname, lname, email, role, username, hash_password, get_time,))
+            cur.execute("INSERT INTO users (fname,lname,email,role,username,password,apikey,lastseen) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",
+                        (fname, lname, email, role, username, hash_password, random_key, get_time,))
             mysql.connection.commit()
             cur.close()
             session['email'] = email
@@ -213,8 +286,9 @@ def signup():
             flash("The account created successfully.")
         return render_template('signup.html')
 
-
 # Route to dashboard page
+
+
 @app.route('/dashboard')
 def dashboard():
 
@@ -245,7 +319,7 @@ def dashboard():
             total_malicious = cur.fetchone()
             # print(total_malicious['COUNT(status)'])
             cur.execute(
-                "SELECT urls, status from url where uid = %s", (uid['id'],))
+                "SELECT urls, status from url  where uid = %s order by date desc", (uid['id'],))
             recent_scan = cur.fetchmany(10)
 
             # print(recent_scan)
@@ -320,7 +394,26 @@ def extension():
 
 @app.route('/api')
 def api():
-    return render_template('api.html')
+    range_date = date_range(date.today())
+    range_date.reverse()
+    data_api = []
+    cur = mysql.connection.cursor()
+
+    cur.execute("SELECT apikey from users where email = %s",
+                (session['email'],))
+    api_key = cur.fetchone()['apikey']
+
+    for i in range_date:
+        cur.execute(
+            "SELECT count from api where date = %s and apikey=%s", (i,api_key,))
+        x = cur.fetchone()
+        if x == None:
+            x = 0
+            data_api.append(x)
+        else:
+            data_api.append(x['count'])
+
+    return render_template('api.html', data=api_key, data2=range_date, data3=data_api)
 
 
 @app.route('/report')
