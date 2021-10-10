@@ -6,114 +6,205 @@
 
 {% block body %}
 <main>
-    <div class="main__container">
-        <!-- MAIN TITLE STARTS HERE -->
 
-        <div class="main__title">
-            <img src="assets/hello.svg" alt="" />
-          <div class="main__greeting">
-              <h1>Total Reports</h1>
-          </div>
+  <div class="popup" id="popup-info" style="color: #000000;">
+    <div class="overlay"></div>
+    <div class="content">
+      <div class="close-btn" onclick="togglePopupInfo()">×</div>
+      <h3>Report Details</h3><br>
+      <div class="grid-container2">
+        <label>URL :</label>
+        <input type="text" name="info-url" id="info-url" readonly><br>
+        <label>Description :</label>
+        <textarea name="info-details" id="info-details" rows="5" cols="50" readonly></textarea><br><br>
       </div>
+    </div>
+  </div>
 
-        <!-- MAIN TITLE ENDS HERE -->
+  <div class="popup" id="popup-delete" style="color: #000000;">
+    <div class="overlay"></div>
+    <div class="content" style="text-align: center;">
+      <i style="color: #f44336; margin-bottom: 30px;" class="fas fa-exclamation-circle fa-6x"></i>
+      <p style="font-size: 16px;">Are sure want to delete this report?</p>
+      <div style="margin-top: 30px;">
 
-        <!-- MAIN CARDS STARTS HERE -->
-        <div class="main__cards container-report">
-          <div class="card">
-            <i
-              class="fa fa-list fa-2x"
-              aria-hidden="true"
-            ></i>
-            <div class="card_inner">
-              <p class="text-primary-p">Reported Url</p>
-              <span class="font-bold text-title">{{ data.data0 }}</span>
-            </div>
-          </div>
-          <div class="card">
-            <i
-              class="fa fa-smile-o fa-2x text-green"
-              aria-hidden="true"
-            ></i>
-            <div class="card_inner">
-              <p class="text-primary-p">Valid Report</p>
-              <span class="font-bold text-title">{{ data.data1 }}</span>
-            </div>
-          </div>
-          <div class="card">
-            <i
-              class="fa fa-frown-o fa-2x text-red"
-              aria-hidden="true"
-            ></i>
-            <div class="card_inner">
-              <p class="text-primary-p">Invalid Report</p>
-              <span class="font-bold text-title">{{ data.data2 }}</span>
-            </div>
-          </div>
-          <div class="card">
-            <i
-              class="fa fa-spinner fa-2x text-yellow"
-              aria-hidden="true"
-            ></i>
-            <div class="card_inner">
-              <p class="text-primary-p">Processing</p>
-              <span class="font-bold text-title">{{ data.data3 }}</span>
-            </div>
-          </div>
-        </div>
-        <!-- MAIN CARDS ENDS HERE -->
+        <form method="POST" action="{{ url_for('delreport') }} ">
+          <button type="button" style="background-color:#008CBA;" onclick="togglePopupDel()">Cancel</button>
 
-        <!-- CHARTS STARTS HERE -->
-        <!-- Daily report -->
-        <div class="charts" style="grid-template-columns: 1fr;">
-          <div class="charts__left">
-            <div class="charts__right__title">
-              <div>
-                <h1>Reported URL</h1>
-              </div>
-              <i class="fa fa-clock-o" aria-hidden="true"></i>
-            </div>
-
-            <!-- Stats Report -->
-            <div class="charts__right__cards">
-              <table id="report" class="table table-striped table-bordered" style="width:100%">
-                <thead>
-                <tr>
-                  <th>Url</th>
-                  <th>Date</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {% for x in data.data4 %}
-                <tr>
-                  <td>{{ x.url }}</td>
-                  <td>10-02-2021</td>
-                  <td class="td-status">
-                    {% if x.status == 'valid' %}
-                    <p style="background-color: #c8e6c9; color: #388e3c;">{{ x.status }}</p>
-                    {% elif x.status == 'invalid' %}
-                    <p style="background-color: #ffcdd2; color: #c62828;">{{ x.status }}</p>
-                    {% else %}
-                    <p style="background-color: #fff8cd; color: #c6bb28;">{{ x.status }}</p>
-                    {% endif %}
-                  </td>
-                </tr>
-                {% endfor %}
-              </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-        <!-- CHARTS ENDS HERE -->
+          <button type="submit" style="background-color:#f44336;">Delete</button>
+          <input name="url" id="rep-url" type="hidden">
+          <input name="date" id="rep-date" type="hidden">
+        </form>
       </div>
-    </main>
+    </div>
+  </div>
+
+  <div class="popup" id="popup-validate" style="color: #000000;">
+    <div class="overlay"></div>
+    <div class="content">
+      <div class="close-btn" onclick="togglePopupVal()">×</div>
+      <h3>Report Details</h3><br>
+      <div class="grid-container2">
+        <label>URL :</label>
+        <input type="text" name="val-url" id="val-url" readonly><br>
+        <label>Description :</label>
+        <textarea name="val-details" id="val-details" rows="5" cols="50" readonly></textarea><br><br>
+      </div>
+      <form method="POST" action="{{ url_for('valreport') }} ">
+        <button type="submit" name="validate" value="valid" style="background-color:#008CBA;">Valid
+        <button type="submit" name="validate" value="invalid" style="background-color:#f44336;">Invalid
+        <input name="url" id="val-url" type="hidden">
+        <input name="date" id="val-date" type="hidden">
+        <input name="id" id="val-id" type="hidden">
+      </form>
+    </div>
+  </div>
 
 
-    <script>
-      // Datatables
 
-    </script>
-    
+  <div class="main__container">
+    <!-- MAIN TITLE STARTS HERE -->
+
+    <div class="main__title">
+      <img src="assets/hello.svg" alt="" />
+      <div class="main__greeting">
+        <h1>Total Reports</h1>
+      </div>
+    </div>
+
+    <!-- MAIN TITLE ENDS HERE -->
+
+    <!-- MAIN CARDS STARTS HERE -->
+    <div class="main__cards container-report">
+      <div class="card">
+        <i class="fa fa-list fa-2x" aria-hidden="true"></i>
+        <div class="card_inner">
+          <p class="text-primary-p">Reported Url</p>
+          <span class="font-bold text-title">{{ data.data0 }}</span>
+        </div>
+      </div>
+      <div class="card">
+        <i class="fa fa-smile-o fa-2x text-green" aria-hidden="true"></i>
+        <div class="card_inner">
+          <p class="text-primary-p">Valid Report</p>
+          <span class="font-bold text-title">{{ data.data1 }}</span>
+        </div>
+      </div>
+      <div class="card">
+        <i class="fa fa-frown-o fa-2x text-red" aria-hidden="true"></i>
+        <div class="card_inner">
+          <p class="text-primary-p">Invalid Report</p>
+          <span class="font-bold text-title">{{ data.data2 }}</span>
+        </div>
+      </div>
+      <div class="card">
+        <i class="fa fa-spinner fa-2x text-yellow" aria-hidden="true"></i>
+        <div class="card_inner">
+          <p class="text-primary-p">Processing</p>
+          <span class="font-bold text-title">{{ data.data3 }}</span>
+        </div>
+      </div>
+    </div>
+    <!-- MAIN CARDS ENDS HERE -->
+
+    <!-- CHARTS STARTS HERE -->
+    <!-- Daily report -->
+    <div class="charts" style="grid-template-columns: 1fr;">
+      <div class="charts__left">
+        <div class="charts__right__title">
+          <div>
+            <h1>Reported URL</h1>
+          </div>
+          <i class="fa fa-clock-o" aria-hidden="true"></i>
+        </div>
+
+        <!-- Stats Report -->
+        <div class="charts__right__cards">
+          <table id="report" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+              <tr>
+                <th>Url</th>
+                {% if session['role'] == 'admin'%}
+                <th>Username</th>
+                {% endif %}
+                <th>Date</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {% for x in data.data4 %}
+              <tr>
+                <td style="min-width: 600px;">{{ x.url }}</td>
+
+                {% if session['role'] == 'admin'%}
+                <td>{{ x.username }}</td>
+                {% endif %}
+
+                <td>{{ x.date }}</td>
+
+                <td class="td-status">
+                  {% if x.status == 'valid' %}
+                  <p style="background-color: #c8e6c9; color: #388e3c;">{{ x.status }}</p>
+                  {% elif x.status == 'invalid' %}
+                  <p style="background-color: #ffcdd2; color: #c62828;">{{ x.status }}</p>
+                  {% else %}
+                  <p style="background-color: #fff8cd; color: #c6bb28;">{{ x.status }}</p>
+                  {% endif %}
+                </td>
+
+                <td>
+                  {% if session['role'] == 'admin'%}
+                  <button type="button" style="background-color:#00ba2e;" class="but-verify"onclick="toggleValidate({{ x }})">Verify</button>
+                  {% else %}
+                  <button type="button" style="background-color:#008cba;" class="but-info"onclick="toggleInfo({{ x }})">Info</button>
+                  <button type="button" style="background-color:#f44336;" class="but-del"onclick="toggleDelete({{ x }})">Delete</button>
+                  {% endif %}
+                </td>
+
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- CHARTS ENDS HERE -->
+  </div>
+</main>
+
+
+<script>
+  function toggleInfo(x) {
+    $("#info-url").val(x.url);
+    $("#info-details").val(x.details);
+    $("#popup-info").toggleClass("active");
+  }
+
+  function toggleDelete(x) {
+    $("#rep-url").val(x.url);
+    $("#rep-date").val(x.date);
+    $("#popup-delete").toggleClass("active");
+  }
+
+  function toggleValidate(x) {
+    $("#val-url").val(x.url);
+    $("#val-details").val(x.details);
+    $("#val-id").val(x.id);
+    $("#popup-validate").toggleClass("active");
+  }
+
+
+  function togglePopupDel() {
+    $("#popup-delete").toggleClass("active");
+  }
+  function togglePopupVal() {
+    $("#popup-validate").toggleClass("active");
+  }
+
+  function togglePopupInfo() {
+    $("#popup-info").toggleClass("active");
+  }
+</script>
 {% endblock %}

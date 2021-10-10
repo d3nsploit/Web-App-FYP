@@ -167,6 +167,9 @@ function api() {
 
   var api = {
     chart: {
+      zoom:{
+        enabled: false
+      },
       height: 350,
       type: "area",
       toolbar: {
@@ -177,7 +180,7 @@ function api() {
       enabled: false
     },
     series: [{
-      name: "Series 1",
+      name: "Usage",
       data: num_api
     }],
     fill: {

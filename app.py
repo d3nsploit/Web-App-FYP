@@ -1,4 +1,4 @@
-from flask import Flask, json, render_template, request, url_for, redirect, session, flash, jsonify
+from flask import Flask, render_template, request, url_for, redirect, session, flash, jsonify
 from flask_mysqldb import MySQL, MySQLdb
 from requests.api import get
 import api_check
@@ -230,6 +230,7 @@ def signin():
             if temp == user['password'].encode('utf-8'):
                 session['email'] = user['email']
                 session['fname'] = user['fname']
+                session['role'] = user['role']
                 ses_created += 1
                 return redirect(url_for('dashboard'))
             else:
@@ -418,12 +419,13 @@ def api():
 
 @app.route('/report')
 def report():
-    if session['email'] == "admin@gmail.com":
+    if session['role'] == "admin":
         cur = mysql.connection.cursor()
         # print(session['email'])
 
         cur.execute(
-            "SELECT url, status from report ORDER by date DESC")
+            "SELECT report.id, url, status, date , details, users.username AS username FROM report left join users on users.id = report.uid")
+
         recent_scan = cur.fetchall()
 
         cur.execute("SELECT COUNT(uid) from report ")
@@ -448,7 +450,7 @@ def report():
         # print(uid['id'])
 
         cur.execute(
-            "SELECT url, status from report where uid = %s ORDER by date DESC", (uid['id'],))
+            "SELECT url, status, date,details from report where uid = %s ORDER by date DESC", (uid['id'],))
         recent_scan = cur.fetchall()
 
         cur.execute(
@@ -472,6 +474,31 @@ def report():
         "data4": recent_scan
     }
     return render_template('report.html', data=data)
+
+@app.route('/report/del', methods=['POST'])
+def delreport():
+    cur = mysql.connection.cursor()
+    url = request.form['url']
+    date = request.form['date']
+    cur.execute("SELECT id FROM users WHERE email=%s",(session['email'],))
+    id = cur.fetchone()['id']
+    cur.execute("DELETE FROM report WHERE uid=%s and url=%s and date=%s",(id,url,date,))
+    mysql.connection.commit()
+    return redirect(url_for('report'))
+
+@app.route('/report/val', methods=['POST'])
+def valreport():
+    cur = mysql.connection.cursor()
+    if request.form['validate'] == "valid":
+        validate = "valid"
+    else:
+        validate = "invalid"
+
+    rep_id = request.form['id']
+
+    cur.execute("UPDATE report SET status = %s WHERE id=%s",(validate,rep_id,))
+    mysql.connection.commit()
+    return redirect(url_for('report'))
 
 
 if __name__ == '__main__':
