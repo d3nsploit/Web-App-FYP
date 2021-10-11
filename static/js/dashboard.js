@@ -69,19 +69,19 @@ function dash_user() {
   var dashboard = {
     series: [{
         name: "Benign",
-        data: [44, 55, 57, 56, 61, 58, 63, 60],
+        data: ben_scan,
       },
       {
         name: "Malicious",
-        data: [76, 85, 101, 98, 87, 105, 91, 114],
+        data: mal_scan,
       },
     ],
     chart: {
+      toolbar:{
+        show: false
+      },
       type: "bar",
       height: 300, // make this 250
-      sparkline: {
-        enabled: true, // make this true
-      },
     },
     plotOptions: {
       bar: {
@@ -99,12 +99,20 @@ function dash_user() {
       colors: ["transparent"],
     },
     xaxis: {
-      categories: ["Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep"],
+      categories: date_scan,
     },
     yaxis: {
       title: {
         text: " (urls)",
       },
+      min: (min) => {
+        min = 0;
+        return min;
+      },
+      max: (max) => {
+        max = 10;
+        return max;
+      }
     },
 
     tooltip: {

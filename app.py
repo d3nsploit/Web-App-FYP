@@ -25,13 +25,13 @@ app.config['MYSQL_DB'] = 'scanme_db'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 mysql = MySQL(app)
 
-count_benign = 0
-count_malicious = 0
-count = 0
+count_benign, count, count_malicious, ses_created = 0,0,0,0
 recent_url = []
 recently_scan_dash = ()
-ses_created = 0
 # Route to homepage
+
+
+
 
 
 def id_generator(size=10, chars=string.ascii_uppercase + string.digits):
@@ -44,6 +44,9 @@ def date_range(start_date):
                  for day in range(number_of_days)]
     return date_list
 
+
+range_date = date_range(date.today())
+range_date.reverse()
 
 @app.route('/')
 def index():
@@ -78,6 +81,7 @@ def result():
         get_url_country = get_url_details[5]
         now = datetime.now()
         get_time = now.strftime("%Y-%m-%d %H:%M:%S")
+        get_date = now.strftime("%Y-%m-%d")
         get_screenshot = api_check.screenshot(get_url)
         get_base64_image = api_check.get_as_base64(get_screenshot)
 
@@ -102,7 +106,7 @@ def result():
                         (session['email'],))
             user = cur.fetchone()
             cur.execute("INSERT INTO url (uid,date,urls,status) VALUES (%s,%s,%s,%s)",
-                        (user['id'], get_time, get_url, prediction[0],))
+                        (user['id'], get_date, get_url, prediction[0],))
             mysql.connection.commit()
             cur.close()
 
@@ -294,34 +298,60 @@ def signup():
 def dashboard():
 
     if 'email' in session:
-        if session['email'] == "admin@gmail.com":
+
+        if session['role'] == "admin":
 
             data = {
                 "data0": count_benign+count_malicious,
                 "data1": count_benign,
                 "data2": count_malicious,
-                "data3": recently_scan_dash
+                "data3": recently_scan_dash[::-1],
+                "data4": '',
+                "data5": '',
+                "data6": ''
             }
-            # print(data['data3'])
+
             return render_template('dashboard.html', data=data)
         else:
-            cur = mysql.connection.cursor()
             # print(session['email'])
+            cur = mysql.connection.cursor()
+
+            ben_rec = []
+            mal_rec = []
+
             cur.execute("SELECT id from users where email = %s",
                         (session['email'],))
-            uid = cur.fetchone()
-            # print(uid['id'])
+            id_user = cur.fetchone()['id']
+
+            for i in range_date:
+                cur.execute(
+                    "SELECT COUNT(id) as num_scan from url where date = %s and uid=%s and status='benign'", (i,id_user,))
+                x = cur.fetchone()
+
+                cur.execute(
+                    "SELECT COUNT(id) as num_scan from url where date = %s and uid=%s and status='malicious'", (i,id_user,))
+                y = cur.fetchone()
+                if x == None:
+                    x = 0
+                    ben_rec.append(x)
+                elif y == None:
+                    y=0
+                    mal_rec.append(y)
+                else:
+                    ben_rec.append(x['num_scan'])
+                    mal_rec.append(y['num_scan'])
+                    
             cur.execute(
-                "SELECT COUNT(status) from url where status = 'benign' and uid = %s", (uid['id'],))
+                "SELECT COUNT(status) from url where status = 'benign' and uid = %s", (id_user,))
             total_benign = cur.fetchone()
             # print(total_benign['COUNT(status)'])
             cur.execute(
-                "SELECT COUNT(status) from url where status = 'malicious' and uid = %s", (uid['id'],))
+                "SELECT COUNT(status) from url where status = 'malicious' and uid = %s", (id_user,))
             total_malicious = cur.fetchone()
             # print(total_malicious['COUNT(status)'])
             cur.execute(
-                "SELECT urls, status from url  where uid = %s order by date desc", (uid['id'],))
-            recent_scan = cur.fetchmany(10)
+                "SELECT urls, status from url  where uid = %s order by date desc", (id_user,))
+            recent_scan = cur.fetchmany(6)
 
             # print(recent_scan)
 
@@ -329,7 +359,10 @@ def dashboard():
                 "data0": total_benign['COUNT(status)']+total_malicious['COUNT(status)'],
                 "data1": total_benign['COUNT(status)'],
                 "data2": total_malicious['COUNT(status)'],
-                "data3": recent_scan
+                "data3": recent_scan,
+                "data4": range_date,
+                "data5": ben_rec,
+                "data6": mal_rec
             }
             # print(data['data3'])
             return render_template('dashboard.html', data=data)
@@ -395,9 +428,8 @@ def extension():
 
 @app.route('/api')
 def api():
-    range_date = date_range(date.today())
-    range_date.reverse()
     data_api = []
+
     cur = mysql.connection.cursor()
 
     cur.execute("SELECT apikey from users where email = %s",
