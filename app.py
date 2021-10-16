@@ -532,6 +532,17 @@ def valreport():
     mysql.connection.commit()
     return redirect(url_for('report'))
 
+@app.route('/scan/extension', methods=['POST'])
+def scanextension():
+    get_url = request.form['url']
+    get_result = feature_extraction.load_url(get_url)
+    arr = np.array([[get_result[0], get_result[1], get_result[2],
+                        get_result[3], get_result[4], get_result[5], get_result[6], get_result[7],
+                        get_result[8], get_result[9], get_result[10], get_result[11], get_result[12]]])
+
+    prediction = model.predict(arr)
+
+    return jsonify(prediction[0])
 
 if __name__ == '__main__':
     app.secret_key = "!@#QWERRRRRRRASDF1234"
