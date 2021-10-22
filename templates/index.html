@@ -28,7 +28,7 @@
             {% for message in get_flashed_messages() %}
             <div class="warning-message">
                 {{ message }}
-              </div>
+            </div>
             {% endfor %}
         </div>
     </div>
@@ -55,10 +55,11 @@
                         style="opacity: 1; transform: matrix(1, 0, 0, 1, 0, 0);">
                         <div class="finbyz-icon finbyz-zoomin" style="transform: matrix(1, 0, 0, 1, 0, 0);">
                             <img alt="Identify financial risk"
-                                src="https://www.finbyz.com/static/media/svg/identify-financial-risk.svg"
+                                src="https://cdn-icons-png.flaticon.com/512/2172/2172891.png"
                                 title="Identify financial risk"></div>
-                        <h4>Identify Malicious Url</h4>
-                        <p>Have a bird eye view of the current systems and processes</p>
+                        <h4>Intelligence Url Scanner</h4>
+                        <p class="sec-2-p">With the Intelligence of our machine learning model, harmful url can be
+                            discovered.</p>
                     </div>
                 </div>
 
@@ -66,10 +67,11 @@
                     <div class="content-box text-center finbyz-fadeinup box-shadow"
                         style="opacity: 1; transform: matrix(1, 0, 0, 1, 0, 0);">
                         <div class="finbyz-icon finbyz-zoomin" style="transform: matrix(1, 0, 0, 1, 0, 0);">
-                            <img alt="Treasury Policy" src="https://www.finbyz.com/static/media/svg/treasury-policy.svg"
+                            <img alt="Treasury Policy" src="https://cdn-icons-png.flaticon.com/512/1589/1589689.png"
                                 title="Treasury Policy"></div>
-                        <h4>Treasury Policy</h4>
-                        <p>Focus on strategic planning rather than daily tactics.</p>
+                        <h4>Detailed Result</h4>
+                        <p class="sec-2-p">Each of scanned url on the web will be provided with details including
+                            screenshot of web.</p>
                     </div>
                 </div>
 
@@ -77,11 +79,11 @@
                     <div class="content-box text-center finbyz-fadeinup box-shadow"
                         style="opacity: 1; transform: matrix(1, 0, 0, 1, 0, 0);">
                         <div class="finbyz-icon finbyz-zoomin" style="transform: matrix(1, 0, 0, 1, 0, 0);">
-                            <img alt="Fx Market Information"
-                                src="https://www.finbyz.com/static/media/svg/fx-market-information .svg"
+                            <img alt="Fx Market Information" src="https://cdn-icons-png.flaticon.com/512/627/627558.png"
                                 title="Fx Market Information"></div>
-                        <h4>Fx Market Information</h4>
-                        <p>Filter out the noise to get the information that matters.</p>
+                        <h4>API and Extension</h4>
+                        <p class="sec-2-p">ScanMe provides the easiest ways to identify malicious URL without going to
+                            our web.</p>
                     </div>
                 </div>
             </div>
@@ -92,21 +94,24 @@
 
 <section id="section3">
     <div class="section3-text">
-        <h2>About Us</h2>
+        <h2>Why we create this?</h2>
         <hr class="lines pb-4" style="transform: matrix(1, 0, 0, 1, 0, 0);">
-        <h3>ndjnadnjndjnansndjndnjndsnandsjnadjnsajdnsn</h3>
+        <h3 class="section-text-sen">Cybersecurity shows enormous trends of malicious urls created everyday which have
+            their own purposes such as steal credential, ransomware attack, and many more. With <span
+                style="color: blue;">ScanMe</span>, it will help you to recognize each of the urls whether it is <span
+                style="color: green;">benign</span> or <span style="color: red;">malicious</span>.</h3>
         <div class="container-sec3">
             <div>
-                <span class="count">71441670</span>
-                njnandjna
+                <span class="count">25,000</span>
+                <span class="count-t">Malicious URL created per day</span>
             </div>
             <div>
-                <span class="count">71441670</span>
-                njnandjna
+                <span class="count">46,000</span>
+                <span class="count-t">Phishing URL created per week</span>
             </div>
             <div>
-                <span class="count">71441670</span>
-                njnandjna
+                <span class="count">6,000,000,000</span>
+                <span class="count-t">Total loses per year</span>
             </div>
         </div>
 
@@ -155,15 +160,14 @@
 </section>
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0.0/jquery.counterup.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
 
 
 <script type="text/javascript">
     $(".count").counterUp({
-        delay: 10,
-        time: 1000
-    })
+        time: 3000
+    });
 </script>
 {% endblock %}

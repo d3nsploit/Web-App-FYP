@@ -324,7 +324,7 @@ h2 {
   margin-right: 15%;
   font-weight: 500;
   border-style: solid;
-  border-color: #000000;
+  border-color: #0568c1;
   float: right;
 }
 
@@ -431,6 +431,7 @@ h2 {
 .content-box .finbyz-icon img {
   align-items: center;
   height: 85px;
+  margin-top: 35px;
 }
 
 .content-box .finbyz-icon {
@@ -458,6 +459,11 @@ hr.lines:before {
   background: #0071bc;
   left: 40px;
   animation: pulse 2s infinite;
+}
+
+.sec-2-p{
+  line-height: 1.6;
+  letter-spacing: 2px;
 }
 
 /* pules effect */
@@ -500,14 +506,29 @@ hr.lines:before {
   margin: 50px 0;
 }
 
+.section-text-sen{
+  text-align: center;
+  margin: 0 200px;
+  line-height: 1.6;
+  letter-spacing: 2px;
+}
+
 .count {
   display: block;
   font-size: 2.5rem;
   padding: 30px 70px;
-  margin-top: 20vh;
+  margin-top: 10vh;
   font-weight: 600;
   width: 100%;
+  text-align: center;
 }
+
+.count-t{
+  display: block;
+  margin: 0 3vw;
+  letter-spacing: 3px;
+}
+
 
 .container-sec3 {
   display: inline-flex;
@@ -1182,7 +1203,7 @@ p.account a:hover {
   
   .content-box {
     margin-top: 4.2rem;
-    height: 12rem;
+    height: 15rem;
     width: 75%;
     margin-inline: auto;
   }
@@ -1197,7 +1218,14 @@ p.account a:hover {
     width: 100%;
     text-align: center;
   }
-  
+
+  .section-text-sen{
+    text-align: center;
+    margin: 0;
+    line-height: 1.6;
+    letter-spacing: 2px;
+  }
+
   .count {
     display: block;
     font-size: 2.5rem;

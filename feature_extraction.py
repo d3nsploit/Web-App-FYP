@@ -159,8 +159,6 @@ def load_url(url):
    webContent = URL_Parse.read()
    soup = bs(webContent, "html.parser", from_encoding="iso-8859-1")
    countRedirected, isRedirected = check_redirected(old_url)
-   print(url_length(Extract_URL), ssl_is_Set(Parse_URL.scheme), port_num(Parse_URL.port), special_char(url), content_type(contentType), ip_address_url(
-        Extract_URL.domain), alexa_rank(url), entrophy(Extract_URL), countRedirected, isRedirected, sensitive_word(url), count_js(soup), count_iframe(soup))
    # time2 = time.time()
    # print(f'Took {time2-time1:.2f} s')
 

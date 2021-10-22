@@ -202,7 +202,17 @@ function api() {
     },
     xaxis: {
       categories: date_api
-    }
+    },
+    yaxis: {
+      min: (min) => {
+        min = 0;
+        return min;
+      },
+      max: (max) => {
+        max = 10;
+        return max;
+      }
+    },
   };
 
   var chart = new ApexCharts(document.querySelector("#apex2"), api);
