@@ -127,6 +127,10 @@ section {
 
 }
 
+.posi{
+  position: absolute; margin-top: -45px; right: 510px; cursor: pointer;
+}
+
 
 h2 {
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -305,7 +309,7 @@ h2 {
   display: block;
   width: 65%;
   box-sizing: border-box;
-  border-radius: 15px;
+  border-radius: 5px;
   border: 1px solid #c4c4c4;
   padding: 1em;
   margin-bottom: 1.25rem;
@@ -415,15 +419,15 @@ h2 {
   padding: 15px;
   margin-top: 4.2rem;
   border-radius: 4px;
-  height: 20rem;
+  height: fit-content;
   -webkit-transition: all 0.3s ease 0s;
   -moz-transition: all 0.3s ease 0s;
-  transition: opacity 0.6s;
+  transition: opacity 1s;
   background: #ffffff;
 }
 
 .content-box:hover {
-  background: #d6e4f0;
+  background: #8fcbff;
   box-shadow: 2px 2px 15px 0 rgba(0, 31, 170, 0.4);
   transition: all 0.5s ease 0s;
 }
@@ -458,32 +462,11 @@ hr.lines:before {
   border-radius: 50%;
   background: #0071bc;
   left: 40px;
-  animation: pulse 2s infinite;
 }
 
 .sec-2-p{
   line-height: 1.6;
   letter-spacing: 2px;
-}
-
-/* pules effect */
-@-webkit-keyframes pulse {}
-
-@keyframes pulse {
-  0% {
-    -moz-box-shadow: 0 0 0 0 rgba(70, 118, 250, 0.4);
-    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
-  }
-
-  70% {
-    -moz-box-shadow: 0 0 0 20px rgba(70, 118, 250, 0);
-    box-shadow: 0 0 0 20px rgba(255, 255, 255, 0);
-  }
-
-  100% {
-    -moz-box-shadow: 0 0 0 0 rgba(70, 118, 250, 0);
-    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
-  }
 }
 
 /* End of Section 2 */
@@ -549,7 +532,7 @@ hr.lines:before {
 /* Section 4 */
 #section4 {
   height: 100vh;
-  background: #163172;
+  background: url(../../static/css/images/bg-hacker.png);
   display: inline-block;
   width: 100%;
   padding-top: 5.5rem;
@@ -623,7 +606,7 @@ hr.lines:before {
   padding: .5rem;
   font-size: .7rem;
   color: var(--black);
-  border-radius: .5rem;
+  border-radius: 5px;
   border: var(--border);
   background: #ffffff;
   text-transform: none;
@@ -640,8 +623,20 @@ hr.lines:before {
 
 .section4 .row form .btn {
   background: #ffffff;
-  color: 0071bc;
+  color: #0071bc;
+  width: 100%;
+  font-size: 16px;
+
+  border: 2px solid #0071bc;
 }
+.section4 .row form .btn:hover {
+  background: #0071bc;
+  color: #ffffff;
+  font-size: 16px;
+  border: 2px solid #ffffff;
+}
+
+
 
 /* End of Section 4 */
 
@@ -707,17 +702,17 @@ hr.lines:before {
 }
 
 .account {
-  color: rgb(58, 58, 58);
+  color: rgb(34, 34, 34);
   font-size: 16px;
   line-height: 25px;
-  opacity: 0.6;
+  opacity: 0.8;
   text-align: center;
 }
 
 .btn,
 button,
 input {
-  border-radius: 10px;
+  border-radius: 5px;
 }
 
 .btn:hover {
@@ -1105,16 +1100,27 @@ p.account a:hover {
 .popup-btn {
   font-size: 16px;
   color: #fff;
-  width: 100px;
+  width: 100%;
   background: #0568c1;
   padding: 7px 20px;
-  margin-top: 3rem;
-  border-style: solid;
-  border-color: #000000;
+  margin-top: 1rem;
+  border-style: none;
 }
 
 
+@media screen and (max-width: 1120px) {
 
+.btn-size{
+  font-size: 16px;
+  width: 90px;
+  padding: 6px 5px;
+  margin: 0 5px;
+}
+
+.result-page{
+  padding: 0 10%;
+}
+}
 
 @media screen and (max-width: 840px) {
 
@@ -1123,6 +1129,10 @@ p.account a:hover {
   }
   .nav__items a:not(:last-child) {
     display: none;
+  }
+
+  .posi{
+    position: absolute; margin-top: -45px; right: 70px; cursor: pointer;
   }
 
   .nav__items button.nav-toggle {
@@ -1203,7 +1213,7 @@ p.account a:hover {
   
   .content-box {
     margin-top: 4.2rem;
-    height: 15rem;
+    height: fit-content;
     width: 75%;
     margin-inline: auto;
   }
@@ -1404,6 +1414,14 @@ p.account a:hover {
     margin: 130px 50px 0 0;
     text-align: unset;
   }
+
+  .btn-size {
+    font-size: 16px;
+    width: 90px;
+    padding: 6px 5px;
+    margin: 0 8px;
+  }
+  
   
 }
 

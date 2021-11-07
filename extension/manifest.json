@@ -1,12 +1,23 @@
 {
     "manifest_version": 2,
   
-    "name": "Malicious Web Content Detector",
+    "name": "ScanMe",
     "description": "This extension helps you avoid accessing malicious websites by giving you a chance to analyze the website before you interact with it.",
     "version": "1.0",
   
+    "icons": { 
+      "16": "/images/icon16.png",
+      "48": "/images/icon48.png",
+      "128": "/images/icon128.png"
+    },
+
     "browser_action": {
-      "default_popup": "popup.html"
+      "default_popup": "popup.html",
+      "default_icon": { 
+        "16": "/images/icon16.png",
+        "48": "/images/icon48.png",
+        "128": "/images/icon128.png"
+      }
     },
       "content_security_policy": "script-src 'self' https://ajax.googleapis.com; object-src 'self'",
     "permissions": [

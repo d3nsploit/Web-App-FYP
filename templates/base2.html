@@ -1,113 +1,221 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="shortcut icon" href="{{ url_for('static', filename='css/favicon.ico') }}">
+	<link rel="shortcut icon" href="{{ url_for('static', filename='css/favicon.ico') }}">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dashboard.css') }}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+		integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+		crossorigin="anonymous" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+		integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/dashboard.css') }}">
 
-    {% block head %} {% endblock %}
+
+
+	{% block head %} {% endblock %}
 </head>
 
 <body id="body">
-    <div class="container">
-      <nav class="navbar">
-        <div class="nav_icon" onclick="toggleSidebar()">
-          <i class="fa fa-bars" aria-hidden="true"></i>
-        </div>
-        <div class="navbar__left">
 
-        </div>
-        <div class="navbar__right">
-          <a href="#">
-            <i class="fa fa-search" aria-hidden="true"></i>
-          </a>
-          <a href="#">
-            <i class="fa fa-clock-o" aria-hidden="true"></i>
-          </a>
-          <a href="#">
-            <img width="30" src="assets/avatar.svg" alt="" />
-            <!-- <i class="fa fa-user-circle-o" aria-hidden="true"></i> -->
-          </a>
-        </div>
-      </nav>
+	<div class="popup-user" id="popup-user" style="color: #000000;">
+		<div class="overlay"></div>
+		<div class="content">
+			<div class="close-btn" onclick="toggleUser()">×</div>
+			<h3>User Profile</h3><br>
+			<div class="grid-container3">
+				<div class="row">
+					<div class="column" style="width: 30%;">
+						<input type="image" safe
+								src="data:image/jpeg;base64,{{ uinfo.image }}"
+								alt="Image not found"
+								style="padding: 10% 0; border-radius: 50%; cursor: pointer; width: 150px; height: 150px;" />
+						<form method="POST" action="{{ url_for('editpic') }}" enctype = "multipart/form-data">
+							<input type="file" id="user-img" name="user-img" onchange="this.form.submit()"  style="display: none;" accept="image/png, image/jpeg">
+						</form>
 
-      {% block body %} {% endblock %}
+						<p style="font-size: 16px;  padding: 0 8%; cursor: pointer;" onclick="togglePass()">Change
+							Password</p>
+					</div>
 
-      <div id="sidebar">
-        <div class="sidebar__title">
-          <div class="sidebar__img">
-            
-            <h1><i class="fa fa-code" > </i> ScanMe</h1>
-          </div>
-          <i
-            onclick="closeSidebar()"
-            class="fa fa-times"
-            id="sidebarIcon"
-            aria-hidden="true"
-          ></i>
-        </div>
+					<div class="column" style="width: 70%;">
 
-        <div class="sidebar__menu" id="sidebar__menu">
-          <div class="sidebar__link">
-            <i class="fa fa-home"></i>
-            <a href="/">Homepage</a>
-          </div>
+						<div style="float:left; margin-right: 50px;">
+							<label>First Name :</label>
+							<input type="text" name="info-user" id="info-user1" class="sname" value="{{ uinfo.fname }}"
+								readonly><br>
+						</div>
 
-          <div class="sidebar__link">
-            <i class="fa fa-tachometer"></i>
-            <a href="/dashboard" id="okok6">Dashboard</a>
-          </div>
+						<div style="float:left;">
+							<label>Last Name :</label>
+							<input type="text" name="info-user" id="info-user2" class="sname" value="{{ uinfo.lname }}"
+								readonly><br>
+						</div>
 
-          {% if session['email'] == 'admin@gmail.com'%}
-          <div class="sidebar__link">
-            <i class="fa fa-users" aria-hidden="true"></i>
-            <a href="/users" id="okok5">Users</a>
-          </div>
-
-          {% else %}
-          <!-- onclick="location.href='/api'" -->
-          <div class="sidebar__link">
-            <i class="fa fa-cogs"></i>
-            <a href="/api" id="okok4">API</a>
-          </div>
-
-          <div class="sidebar__link">
-            <i class="fa fa-puzzle-piece"></i>
-            <a href="/extension" id="okok3">Extension</a>
-          </div>
-
-          {% endif %}
-          <div class="sidebar__link">
-            <i class="fa fa-bug"></i>
-            <a href="/report" id="okok2">Report</a>
-          </div>
-
-          <div class="sidebar__link">
-            <i class="fa fa-power-off"></i>
-            <a href="/logout" id="okok1">Log Out</a>
-          </div>
-          
-        </div>
-      </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <script src="http://code.jquery.com/jquery-3.3.1.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <script type="text/javascript" src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/piechart.js') }}"></script>
-
-  <!-- Table pagination -->
-  <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+						<br style="clear:both;" />
+						<label>Email :</label>
+						<input type="text" name="info-user" id="info-user3" value="{{ uinfo.email }}" readonly
+							style="color: #4e4e4e;"><br>
+						<label>Username :</label>
+						<input type="text" name="info-user" id="info-user4" value="{{ uinfo.username }}" readonly
+							style="color: #4e4e4e;"><br>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 
-  </body>
+	<div class="popup-user" id="popup-user-pass" style="color: #000000; width: 400px;">
+		<div class="overlay"></div>
+		<div class="content">
+			<div class="close-btn" onclick="togglePass2()">×</div>
+			<h3 style="letter-spacing: 1px;">Change Password</h3><br>
+			<div class="grid-container3">
+				<form method="POST" action="{{ url_for('editpass') }} ">
+					<label>Old Password :</label>
+					<input type="password" name="old-pass" id="old-pass" required><br>
+					<label>New Password :</label>
+					<input type="password" name="new-pass" id="new-pass" required><br>
+					<label>Re-enter new password :</label>
+					<input type="password" name="new-pass2" id="old-pass2" required><br>
+
+					<button type="submit" style="background-color: #006eff; float: right;">Submit</button>
+					<button type="button" style="border: 1px solid #5a5a5a; color: #5a5a5a; float: right; background-color: #ffffff;"
+						onclick="togglePass2()">Cancel</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="container">
+		<nav class="navbar">
+			<div class="nav_icon" onclick="toggleSidebar()">
+				<i class="fa fa-bars" aria-hidden="true"></i>
+			</div>
+			<div class="navbar__left">
+
+			</div>
+			<div class="navbar__right">
+				<a href="#">
+					<img
+					src="data:image/jpeg;base64,{{ uinfo.image }}"
+					alt="Image not found"
+					style="padding: 10% 0; border-radius: 50%; cursor: pointer; width: 50px; height: 50px;" onclick="toggleUser()"/>
+				</a>
+			</div>
+		</nav>
+
+		{% block body %} {% endblock %}
+
+		<div id="sidebar">
+			<div class="sidebar__title">
+				<div class="sidebar__img">
+
+					<h1><i class="fa fa-code"> </i> ScanMe</h1>
+				</div>
+				<i onclick="closeSidebar()" class="fa fa-times" id="sidebarIcon" aria-hidden="true"></i>
+			</div>
+
+			<div class="sidebar__menu" id="sidebar__menu">
+				<div class="sidebar__link">
+					<i class="fa fa-home"></i>
+					<a href="/">Homepage</a>
+				</div>
+
+				<div class="sidebar__link">
+					<i class="fa fa-tachometer"></i>
+					<a href="/dashboard" id="okok6">Dashboard</a>
+				</div>
+
+				{% if session['role'] == 'admin'%}
+				<div class="sidebar__link">
+					<i class="fa fa-users" aria-hidden="true"></i>
+					<a href="/users" id="okok5">Users</a>
+				</div>
+
+				{% else %}
+				<!-- onclick="location.href='/api'" -->
+				<div class="sidebar__link">
+					<i class="fa fa-cogs"></i>
+					<a href="/api" id="okok4">API</a>
+				</div>
+
+				<div class="sidebar__link">
+					<i class="fa fa-puzzle-piece"></i>
+					<a href="/extension" id="okok3">Extension</a>
+				</div>
+
+				{% endif %}
+				<div class="sidebar__link">
+					<i class="fa fa-bug"></i>
+					<a href="/report" id="okok2">Report</a>
+				</div>
+
+				<div class="sidebar__link">
+					<i class="fa fa-power-off"></i>
+					<a href="/logout" id="okok1">Log Out</a>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+	<script type="text/javascript" src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/piechart.js') }}"></script>
+
+	<!-- Table pagination -->
+	<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+
+
+
+	<script>
+		//   function toggleUser() {
+		//   $("#val-url").val(x.url);
+		//   $("#val-details").val(x.details);
+		//   $("#val-id").val(x.id);
+		//   $("#popup-validate").toggleClass("active");
+		// }
+
+
+		function toggleUser() {
+			$("#popup-user").toggleClass("active");
+		}
+
+		function togglePass() {
+			$("#popup-user").toggleClass("active");
+			$("#popup-user-pass").toggleClass("active");
+		}
+
+		function togglePass2() {
+			$("#popup-user-pass").toggleClass("active");
+		}
+	</script>
+
+	<script>
+		function toggleClose() {
+			$("#closebut").hide(500);
+
+		};
+
+		setTimeout(function () {
+			$("#closebut").fadeOut();
+		}, 4000);
+
+		$("input[type='image']").click(function () {
+			$("input[id='user-img']").click();
+		});
+	</script>
+</body>
+
 </html>

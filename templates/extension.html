@@ -9,8 +9,12 @@
   <div class="main__container">
     <!-- MAIN TITLE STARTS HERE -->
 
-    <div class="main__greeting">
-      <h1>Browser Extension</h1>
+    <div class="main__title">
+      <img src="assets/hello.svg" alt="" />
+      <div class="main__greeting">
+        <h1>Hello {{ session['fname'] }}</h1>
+        <p>Welcome to extension information</p>
+      </div>
     </div>
 
     <!-- MAIN TITLE ENDS HERE -->
@@ -23,7 +27,8 @@
             scan any URL that opened on your browser tab. It more convenient and easier for users because they do not
             need to type the URL. By simply clicking to a button only, the result of the scanned URL will be displayed.
             It is great, right? <br><br> However, currently we only provide an
-              extension for <b>Chrome browser </b>only. We will try to make our extension available for other web browser in the future.
+            extension for <b>Chrome browser </b>only. We will try to make our extension available for other web browser
+            in the future.
           </p>
 
         </div>
@@ -31,9 +36,30 @@
           extension</a>
       </div>
 
+      <div class="card">
+        <h3 style="margin-left: 10px;">Scan suspicious links</h3><br>
+        <div class="card_inner_api">
+          <p class="api-key-p" style="text-align: justify; line-height: 30px;">Once you click the extension icon, it
+            will automatically capture what url that you open on the tab. You just need to click the ScanMe button and
+            it will immediately display the result of the scanning whether it benign or malicious.
+          </p>
+        </div>
+        <br>
 
-
+        <div class="row-ext" style="text-align: center; margin-left: auto; margin-right: auto;">
+          <div class="column-ext">
+            <img src="/static/css/images/ext1.png" alt="" width="350" height="400" style="border: 1px solid #000000;">
+          </div>
+          <div class="column-ext">
+            <img src="/static/css/images/ext2.png" alt="" width="350" height="400" style="border: 1px solid #000000;">
+          </div>
+          <div class="column-ext">
+            <img src="/static/css/images/ext3.png" alt="" width="350" height="400" style="border: 1px solid #000000;">
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </main>
 
 

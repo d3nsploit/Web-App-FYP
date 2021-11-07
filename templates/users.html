@@ -7,100 +7,141 @@
 {% block body %}
 
 <main>
-    <div class="main__container">
-        <!-- MAIN TITLE STARTS HERE -->
+  {% for message in get_flashed_messages() %}
+  {% if message == "User information updated" %}
+  <div id="closebut" style="position: absolute; right: 50px; background-color: #1c8f22; padding: 10px; color: #ffffff;">
+    <strong>Success | </strong>{{ message }}
+    <a style="margin-left: 25px;  cursor: pointer;" onclick="toggleClose()">x</a>
+  </div>
+  {% else %}
+  <div id="closebut" style="position: absolute; right: 50px; background-color: #d63d3d; padding: 10px; color: #ffffff;">
+    <strong>Error | </strong>{{ message }}
+    <a style="margin-left: 25px;  cursor: pointer;" onclick="toggleClose()">x</a>
+  </div>
+  {% endif %}
+  {% endfor %}
 
-        <div class="main__title">
-            <img src="assets/hello.svg" alt="" />
-          <div class="main__greeting">
-              <h1>Hello Admin</h1>
-              <p>Welcome to user information</p>
-          </div>
+  <div class="popup" id="popup-edit" style="color: #000000;">
+    <div class="overlay"></div>
+    <div class="content">
+      <div class="close-btn" onclick="togglePopupEditRole()">×</div>
+      <h3>Edit User</h3><br>
+      <div class="grid-container2">
+        <form method="POST" action="{{ url_for('editrole') }} ">
+
+        <label>Username :</label>
+        <input type="text" name="info-username" id="info-username" readonly><br>
+        <label>Email :</label>
+        <input type="text" name="info-email" id="info-email" readonly><br>
+        <label>User Role : (Type 'admin' to change role)</label>
+        <input type="text" name="info-role" id="info-role"><br>
+        <button type="submit" style="background-color:#004aba; float: right;">Save</button>
+        <button type="button" style="background-color: #ffffff; color:#f44336; border: 1px solid #f44336; float: right;" onclick="togglePopupEditRole()">Cancel</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="main__container">
+    <!-- MAIN TITLE STARTS HERE -->
+
+    <div class="main__title">
+      <img src="assets/hello.svg" alt="" />
+      <div class="main__greeting">
+        <h1>Hello Admin</h1>
+        <p>Welcome to user information</p>
+      </div>
+    </div>
+
+    <!-- MAIN TITLE ENDS HERE -->
+
+    <!-- MAIN CARDS STARTS HERE -->
+    <div class="main__cards container-dashboard-url">
+      <div class="card">
+        <i class="fa-solid fa-users fa-2x" style="color: #004aba;" aria-hidden="true"></i>
+        <div class="card_inner">
+          <p class="text-primary-p">Registered Users</p>
+          <span class="font-bold text-title">{{ data.data1 }}</span>
+        </div>
       </div>
 
-        <!-- MAIN TITLE ENDS HERE -->
-
-        <!-- MAIN CARDS STARTS HERE -->
-        <div class="main__cards container-dashboard-url">
-          <div class="card">
-            <i
-              class="fa fa-user-o fa-2x text-lightblue"
-              aria-hidden="true"
-            ></i>
-            <div class="card_inner">
-              <p class="text-primary-p">Registered Users</p>
-              <span class="font-bold text-title">{{ data.data1 }}</span>
-            </div>
-          </div>
-
-          <div class="card">
-            <i
-              class="fa fa-video-camera fa-2x text-yellow"
-              aria-hidden="true"
-            ></i>
-            <div class="card_inner">
-              <p class="text-primary-p">Active Users</p>
-              <span class="font-bold text-title">{{ data.data3 }}</span>
-            </div>
-          </div>
-
-          <div class="card">
-            <i
-              class="fa fa-thumbs-up fa-2x text-green"
-              aria-hidden="true"
-            ></i>
-            <div class="card_inner">
-              <p class="text-primary-p">Admin Users</p>
-              <span class="font-bold text-title">{{ data.data2 }}</span>
-            </div>
-          </div>
+      <div class="card">
+        <i class="fa-solid fa-user-check fa-2x" style="color: #1c8f22;" aria-hidden="true"></i>
+        <div class="card_inner">
+          <p class="text-primary-p">Active Users</p>
+          <span class="font-bold text-title">{{ data.data3 }}</span>
         </div>
-        <!-- MAIN CARDS ENDS HERE -->
-
-        <!-- CHARTS STARTS HERE -->
-        <!-- Daily report -->
-        <div class="charts" style="grid-template-columns: 1fr;">
-          <div class="charts__left">
-            <div class="charts__right__title">
-              <div>
-                <h1>List of Users</h1>
-              </div>
-              <i class="fa fa-clock-o" aria-hidden="true"></i>
-            </div>
-
-            <!-- Stats Report -->
-            <div class="charts__right__cards">
-              <table id="users" class="table table-striped table-bordered" style="width:100%">
-                <thead>
-                <tr>
-                  <th> </th>
-                  <th>Username</th>
-                  <th>Email</th>
-                  <th>User Role</th>
-                  <th>Reports</th>
-                  <th>Last Login</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for x in data.data0 %}
-                <tr>
-                  <td>gmbar</td>
-                  <td>{{ x.username }}</td>
-                  <td>{{ x.email }}</td>
-                  <td>{{ x.role }}</td>
-                  <td>{{ x.number_of_report }}</td>
-                  <td>{{ x.lastseen }}</td>
-                </tr>
-                {% endfor %}
-              </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-        <!-- CHARTS ENDS HERE -->
       </div>
-    </main>
+
+      <div class="card">
+        <i class="fa-solid fa-user-gear fa-2x" style="color: #a50000;" aria-hidden="true"></i>
+        <div class="card_inner">
+          <p class="text-primary-p">Admin Users</p>
+          <span class="font-bold text-title">{{ data.data2 }}</span>
+        </div>
+      </div>
+    </div>
+    <!-- MAIN CARDS ENDS HERE -->
+
+    <!-- CHARTS STARTS HERE -->
+    <!-- Daily report -->
+    <div class="charts" style="grid-template-columns: 1fr;">
+      <div class="charts__left">
+        <div class="charts__right__title">
+          <div>
+            <h1>List of Users</h1>
+          </div>
+          <i class="fas fa-users"></i>        </div>
+
+        <!-- Stats Report -->
+        <div class="charts__right__cards">
+          <table id="users" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+              <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>User Role</th>
+                <th>Reports</th>
+                <th>Last Login</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for x in data.data0 %}
+              <tr>
+                <td>{{ x.username }}</td>
+                <td>{{ x.email }}</td>
+                <td>{{ x.role }}</td>
+                <td>{{ x.number_of_report }}</td>
+                <td>{{ x.lastseen }}</td>
+                <td>
+                  <button type="button" style=" width: min-content; background-color: #004aba;"onclick="toggleEditRole('{{ x.username +','+ x.email +','+ x.role }}')"><i
+                      class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- CHARTS ENDS HERE -->
+  </div>
+</main>
 
 
+<script>
+  function toggleEditRole(x) {
+    let info = x.split(',')
+    $("#info-username").val(info[0]);
+    $("#info-email").val(info[1]);
+    $("#info-role").val(info[2]);
+    $("#popup-edit").toggleClass("active");
+  }
+
+  function togglePopupEditRole() {
+    $("#popup-edit").toggleClass("active");
+  }
+</script>
 
 {% endblock %}

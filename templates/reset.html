@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Login - ScanMe</title>
+
+{% endblock %}
+
+{% block body %}
+
+<div class="login-form">
+    <h2 style="color: #2c4893;">Reset Password</h2>
+
+    <div class="container-form">
+        <div class="main-login">
+            <div class="content">
+                
+                {% for message in get_flashed_messages() %}
+                {% if message == "Your password change successfully" %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ message }}
+                  </div>
+                  {% else %}
+                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ message }}
+                  </div>
+                  {% endif %}
+
+                {% endfor %}
+
+                <form method="POST">
+                    <input class="form-homepage" type="password" name="password" placeholder="Enter new password" required autofocus="">
+                    <input class="form-homepage" type="password" name="password1" placeholder="Re-enter new password" required autofocus="">
+                    <button class="btn" type="submit">Change Password</button>
+                </form>
+            </div>
+            <div class="form-img">
+                <img src="/static/css/images/signin.jpg">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

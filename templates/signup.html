@@ -21,7 +21,7 @@
                 {% endfor %}
                 {% else %}
                 {% for message in get_flashed_messages() %}
-                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     {{ message }}
                   </div>
                 {% endfor %}
@@ -33,7 +33,7 @@
                     <input class="form-homepage" type="email" name="email" placeholder="Email" required autofocus="">
                     <input class="form-homepage" type="text" name="username" placeholder="Username" required autofocus="">
                     <input class="form-homepage" type="password" name="password" placeholder="Password" required autofocus="">
-                    <input class="form-homepage" type="password" name="repassword" placeholder="Password" required autofocus="">
+                    <input class="form-homepage" type="password" name="repassword" placeholder="Re-enter password" required autofocus="">
                     <button class="btn" type="submit">Sign Up</button>
                 </form>
                 <p class="account">Already registered? <a href="/sign_in"> Sign In</a></p>

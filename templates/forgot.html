@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Login - ScanMe</title>
+
+{% endblock %}
+
+{% block body %}
+
+<div class="login-form">
+    <h2 style="color: #2c4893;">Reset Password</h2>
+
+    <div class="container-form">
+        <div class="main-login">
+            <div class="content">
+                
+                {% for message in get_flashed_messages() %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ message }}
+                  </div>
+                {% endfor %}
+
+                <div style="text-align: center; font-family:  'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif">
+                    <p>Don't worry, this sometimes happens. Just fill in your email address below and a link to reset the password will be sent to you.</p>
+                </div>
+                <hr>
+                <form method="POST">
+                    <input class="form-homepage" type="email" name="email" placeholder="Email" required autofocus="" style="margin-top: 10px;">
+                    <button class="btn" type="submit">Submit</button>
+                </form>
+            </div>
+            <div class="form-img" style="margin-top: -80px;">
+                <img src="/static/css/images/forgotpass.jpg">
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

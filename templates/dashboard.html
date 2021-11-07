@@ -10,7 +10,7 @@
     <!-- MAIN TITLE STARTS HERE -->
 
     <div class="main__title">
-      <!-- <img src="assets/hello.svg" alt="" /> -->
+      <img src="assets/hello.svg" alt="" />
       <div class="main__greeting">
         {% if session['role'] == 'admin'%}
         <h1>Hello Admin</h1>
@@ -20,6 +20,19 @@
         <p id="test123">Welcome to your dashboard</p>
         {% endif%}
       </div>
+      {% for message in get_flashed_messages() %}
+      {% if message == "Your password change successfully" or message == "User image updated" %}
+      <div id="closebut" style="position: absolute; right: 50px; background-color: #0c5810; padding: 10px; color: #ffffff;">
+        <strong>Success | </strong>{{ message }} 
+        <a style="margin-left: 25px;  cursor: pointer;" onclick="toggleClose()">x</a>
+      </div>
+      {% else %}
+      <div id="closebut" style="position: absolute; right: 50px;background-color: #d63d3d; padding: 10px; color: #ffffff;" >
+        <strong>Error | </strong>{{ message }} 
+        <a style="margin-left: 25px;  cursor: pointer;" onclick="toggleClose()">x</a>
+      </div>
+      {% endif %}
+      {% endfor %}
     </div>
 
     <!-- MAIN TITLE ENDS HERE -->
@@ -56,8 +69,8 @@
     <!-- Daily report -->
     <div class="charts container-dashboard">
       <div class="charts__left">
-          {% if session['role'] == 'admin'%}
-          <div class="charts__left__title">
+        {% if session['role'] == 'admin'%}
+        <div class="charts__left__title">
 
           <div>
             <h1>ML Accuracy</h1>
@@ -73,11 +86,11 @@
 
         {% else %}
         <div class="charts__left__title">
-        <div>
-          <h1>Daily Report</h1>
+          <div>
+            <h1>Daily Report</h1>
+          </div>
+          <i class="fa fa-calendar" aria-hidden="true"></i>
         </div>
-        <i class="fa fa-calendar" aria-hidden="true"></i>
-      </div>
 
         <div id="apex1"></div>
         {% endif %}
@@ -97,6 +110,7 @@
             <tr>
               <th>Url</th>
               <th>Status</th>
+              <th>Time</th>
             </tr>
             {% for x in data.data3 %}
             <tr>
@@ -108,6 +122,7 @@
                 <p style="background-color: #ffcdd2; color: #c62828;">{{ x.status }}</p>
                 {% endif %}
               </td>
+              <td>{{ x.date }}</td>
             </tr>
 
 
@@ -126,10 +141,6 @@
   var mal_scan = JSON.parse('{{ data.data6|tojson|safe }}');
 </script>
 
-<script>
-  function is_user(){
-    
-  }
-</script>
+
 
 {% endblock %}

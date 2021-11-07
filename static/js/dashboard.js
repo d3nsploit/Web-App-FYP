@@ -76,6 +76,9 @@ function dash_user() {
         data: mal_scan,
       },
     ],
+
+    colors:['#04ba0d','#ff0000'],
+
     chart: {
       toolbar:{
         show: false

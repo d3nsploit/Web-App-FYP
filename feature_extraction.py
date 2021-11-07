@@ -1,16 +1,14 @@
-import concurrent.futures
+from pickle import load
 import requests
 from bs4 import BeautifulSoup as bs
 import ipaddress
-import socket
 import urllib.request
 import re
 from urllib.parse import urlparse
+from requests.api import request
 import tldextract
 from nostril import nonsense
-import base64
 import ssl
-import time #Check speed utk extract data
 
 
 # Check url length (subdomain + domain + tld)
@@ -107,6 +105,17 @@ def count_redirected(url):
         numRedirect += 1
     return numRedirect
 
+# Count how many URL is redirected
+def route_redirect(url):
+    route = []
+    responses = requests.get(url, timeout=5)
+    for response in responses.history:
+        x = "{} --> {}".format(response.status_code,response.url)
+        route.append(x)
+    y = "{} --> {}".format(responses.status_code,requests.get(url).url)
+    route.append(y)
+    return tuple(route)
+
 
 # Check url sensitive word (0 [benign], 1 [malicious])
 def sensitive_word(url):
@@ -159,14 +168,17 @@ def load_url(url):
    webContent = URL_Parse.read()
    soup = bs(webContent, "html.parser", from_encoding="iso-8859-1")
    countRedirected, isRedirected = check_redirected(old_url)
+#    print(Extract_URL)
    # time2 = time.time()
    # print(f'Took {time2-time1:.2f} s')
+
 
    return url_length(Extract_URL), ssl_is_Set(Parse_URL.scheme), port_num(Parse_URL.port), special_char(url), content_type(contentType), ip_address_url(Extract_URL.domain), alexa_rank(url), entrophy(Extract_URL), countRedirected, isRedirected, sensitive_word(url), count_js(soup), count_iframe(soup)
 
 
+# print(load_url("https://bit.ly/3BLFkBW"))
 
-
+# print(route_redirect("https://bit.ly/3BLFkBW"))
 
 # print(load_url("https://www.msn.com/en-my/news/national/bersatu-man-quits-after-racial-slur-against-kisona/ar-AAP5QOA?ocid=msedgntp"))
 # print(get_as_base64("https://api.screenshotmachine.com/?key=b14046&url=https://google.com&dimension=1024x768"))

@@ -1,7 +1,6 @@
 import requests
 import whois
 import socket
-import json
 import hashlib
 import urllib.parse
 import urllib.request
@@ -101,4 +100,4 @@ def get_as_base64(url):
    return "data:image/jpeg;base64,"+base64.b64encode(requests.get(url).content).decode('utf-8')
 
 
-# url_scraper("https://amalgjose.com/2021/08/08/how-to-check-the-version-of-flask-in-python/")
+# print(url_scraper("https://google.com"))

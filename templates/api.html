@@ -9,8 +9,12 @@
   <div class="main__container">
     <!-- MAIN TITLE STARTS HERE -->
 
-    <div class="main__greeting">
-      <h1>API Key</h1>
+    <div class="main__title">
+      <img src="assets/hello.svg" alt="" />
+      <div class="main__greeting">
+        <h1>Hello {{ session['fname'] }}</h1>
+        <p>Welcome to api information</p>
+      </div>
     </div>
 
     <!-- MAIN TITLE ENDS HERE -->
@@ -20,26 +24,42 @@
       <div class="card">
         <div class="card_inner_api">
           <p class="api-key">Key:</p>
-          <p class="api-key-p" id="apikey" style="line-height: 50px;">{{ data }}</p>
-          <button onclick="CopyToClipboard('apikey');return false;">Copy <i class="fa fa-clipboard"></i>
+          <p class="api-key-p" id="apikey" style="line-height: 50px; ">{{ data }}</p>
+          <button onclick="CopyToClipboard('apikey');return false;"
+            style="color: #000000; border: 1px solid #000000; width: fit-content;">Copy <i class="fa fa-clipboard"></i>
           </button>
         </div>
-        <a href="#" style="text-decoration: none; color: rgb(24, 82, 190);">API Documentation</a>
       </div>
 
+      <div class="card">
+        <h3 style="margin-left: 10px;">API Submission</h3><br>
+          <p class="api-key-p" style="text-align: justify; line-height: 30px; margin-bottom: 15px;">
+            You can use few methods to submit the api such as python, curl or etc. Example below showing on how you can submit the api using <code>curl</code>. 
+          </p>
+        <div class="card_inner_api" style="display: block;">
+          <div style="background-color: #000000; color:#74c6e6; margin-left: 12px; ">
+            <code>
+              <span style="color: #ffffff;">curl -X POST</span> https://www.scan4me.xyz/userapi <span style="color: #ffffff;">\</span> <br>
+              <span style="color: #ffffff; margin-left: 40px;">-H </span> "Content-Type: application/json" <span style="color: #ffffff;">\</span> <br>
+              <span style="color: #ffffff; margin-left: 40px;">-d </span> "{\"apikey\":\"$api\",\"urls\":\"$url\"}"
+            </code>
+          </div>
+        </div>
+      </div>
 
-      <div class="charts">
+      <div class="charts_api">
         <div class="charts__left">
           <div class="charts__left__title">
             <div>
               <h1>API Usage</h1>
             </div>
-            <i class="fa fa-usd" aria-hidden="true"></i>
+            <i class="fa fa-link" aria-hidden="true"></i>
           </div>
           <div id="apex2"></div>
         </div>
       </div>
     </div>
+  </div>
 </main>
 
 <script>

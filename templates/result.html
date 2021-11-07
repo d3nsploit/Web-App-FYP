@@ -68,16 +68,16 @@
       <h4>Submitted On</h4>
       <p class="url-link"> {{ data1 }} </p>
       <hr>
-      <h4>Existing Web Result</h4>
-      <p>VirusTotal</p>
-      <p>URLScan.io</p>
-      <p>Sucuri</p>
+      <h4>Redirects Route</h4>
+      {% for x in data11 %}
+        <p>{{ x }}</p>
+      {% endfor %}
+
       <hr>
     </div>
 
     <div class="column left-sum">
       <h4 class="h4-title">Result Summary</h4>
-
       <div class="grid-container">
         <div>URL Status</div>
         {% if data3 == 'benign'%}
@@ -106,10 +106,6 @@
         <div>Country</div>
         <div>{{ data10 }}</div>
       </div>
-
-
-
-
     </div>
   </div>
 
@@ -136,7 +132,7 @@
     function downloadPDF() {
       var element = document.getElementById("result-sum-page");
       html2pdf(element, {
-        margin: 15,
+        margin: 10,
         filename: 'download.pdf',
         image: {
           type: 'jpg',

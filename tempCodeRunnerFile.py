@@ -62,10 +62,18 @@
 # print(f'Took {time2-time1:.2f} s')
 
 
-from datetime import datetime, timedelta, date
-start_date = date.today()
-number_of_days = 5
+# from datetime import datetime, timedelta, date
+# start_date = date.today()
+# number_of_days = 5
 
-date_list = [(start_date + timedelta(5)) for day in range(number_of_days)]
+# date_list = [(start_date + timedelta(5)) for day in range(number_of_days)]
 
-print(date_list)
+# print(date_list)
+
+
+import bcrypt
+
+password = 'Scanme123@'.encode('utf-8')
+hash_password = bcrypt.hashpw(password, bcrypt.gensalt())
+
+print(hash_password)
