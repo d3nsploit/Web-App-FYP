@@ -26,7 +26,10 @@
     </div>
   </div>
   {% else %}
-  <h4 style="text-align: center;">Please Sign-in</h4>
+  <h5 style="text-align: center;">This action required you to sign in</h4>
+    <form method="GET" action="{{ url_for('signin') }}">
+      <input class="popup-btn" type="submit" value="Sign In">
+    </form>
   {% endif %}
 </div>
 
