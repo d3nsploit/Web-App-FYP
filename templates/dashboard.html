@@ -22,13 +22,15 @@
       </div>
       {% for message in get_flashed_messages() %}
       {% if message == "Your password change successfully" or message == "User image updated" %}
-      <div id="closebut" style="position: absolute; right: 50px; background-color: #0c5810; padding: 10px; color: #ffffff;">
-        <strong>Success | </strong>{{ message }} 
+      <div id="closebut"
+        style="position: absolute; right: 50px; background-color: #0c5810; padding: 10px; color: #ffffff;">
+        <strong>Success | </strong>{{ message }}
         <a style="margin-left: 25px;  cursor: pointer;" onclick="toggleClose()">x</a>
       </div>
       {% else %}
-      <div id="closebut" style="position: absolute; right: 50px;background-color: #d63d3d; padding: 10px; color: #ffffff;" >
-        <strong>Error | </strong>{{ message }} 
+      <div id="closebut"
+        style="position: absolute; right: 50px;background-color: #d63d3d; padding: 10px; color: #ffffff;">
+        <strong>Error | </strong>{{ message }}
         <a style="margin-left: 25px;  cursor: pointer;" onclick="toggleClose()">x</a>
       </div>
       {% endif %}
@@ -112,21 +114,35 @@
               <th>Status</th>
               <th>Time</th>
             </tr>
-            {% for x in data.data3 %}
-            <tr>
-              <td>{{ x.urls }}</td>
-              <td class="td-status">
-                {% if x.status == 'benign' %}
-                <p style="background-color: #c8e6c9; color: #388e3c;">{{ x.status }}</p>
-                {% else %}
-                <p style="background-color: #ffcdd2; color: #c62828;">{{ x.status }}</p>
-                {% endif %}
+            {% if data.data3 != 'No data available in table' %}
+              {% for x in data.data3 %}
+              <tr>
+                <td>{{ x.urls }}</td>
+                <td class="td-status">
+                  {% if x.status == 'benign' %}
+                  <p style="background-color: #c8e6c9; color: #388e3c;">{{ x.status }}</p>
+                  {% else %}
+                  <p style="background-color: #ffcdd2; color: #c62828;">{{ x.status }}</p>
+                  {% endif %}
+                </td>
+                <td>{{ x.date }}</td>
+              </tr>
+              {% endfor %}
+            {% else %}
+            <div>
+              <td style="background-color: #ffffff; padding: 0;">                
+                <p style="border-top: 1px solid #000000;border-bottom: 1px solid #000000; padding: 8px 0; color: #ffffff;">1</p>
+
               </td>
-              <td>{{ x.date }}</td>
-            </tr>
+              <td style="background-color: #ffffff; text-align: center; padding: 0;">
+                <p style="border-top: 1px solid #000000;border-bottom: 1px solid #000000;padding: 8px 0;">{{ data.data3 }}</p>
+              </td>
+              <td style="background-color: #ffffff;padding: 0;">
+                <p style="border-top: 1px solid #000000;border-bottom: 1px solid #000000; padding: 8px 0; color: #ffffff;">1</p>
+              </td>
+            </div>
 
-
-            {% endfor %}
+            {% endif %}
           </table>
         </div>
       </div>
